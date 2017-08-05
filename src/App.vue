@@ -5,7 +5,7 @@
 		  <router-view></router-view>
 	  	<!-- </keep-alive> -->
 	  </transition>
-	  <!-- <play-fixed></play-fixed> -->
+	  <play-fixed></play-fixed>
   	  <transition name="list-view">
 	  	<component :is="showlist && 'listView'"></component>
 	  </transition>

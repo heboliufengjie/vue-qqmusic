@@ -96,7 +96,14 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component(resolve) {
-        require(['@/components/login'], resolve);
+        require(['@/components/_login'], resolve);
+      }
+    },
+    {
+      path: '/lists/:id',
+      name: 'lists',
+      component(resolve) {
+        require(['@/components/_lists'], resolve);
       }
     },
   ]
