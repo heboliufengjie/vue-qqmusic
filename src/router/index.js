@@ -91,7 +91,14 @@ const router = new Router({
       component(resolve) {
         require(['@/components/singer'], resolve);
       }
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component(resolve) {
+        require(['@/components/login'], resolve);
+      }
+    },
   ]
 });
 
