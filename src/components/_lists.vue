@@ -1,86 +1,12 @@
 
 <style lang="sass">
-	.music-cover-wrap {
-		position: relative;
-		margin-top: -$header-height;
-		z-index: 0;
-		.music-cover {
-			 width: 100%;
-			 background-repeat: no-repeat;
-			 background-size: cover;
-			 transition: blur .3s ease;
-			 &:after {
-			 	display: block;
-			 	content: '';
-			 	padding-top: 90%;
-			 }
-		}
-		.title-wrap {
-			position: absolute;
-			width: 100%;
-			bottom: 25%;
-			color: #ffffff;
-			z-index: 3;
-			.main-title, .minor-title {
-				text-align: center;
-				margin-top: 0;
-				margin-bottom: 5px;
-			}
-			.main-title {
-				font-size: 18px;
-			}
-			.minor-title {
-				font-size: 14px;
-			}
-		}
-		.cover-overlay {
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			background-color: rgba(0, 0, 0, .7);
-			z-index: 2;
-		}
-	}
-	.song-cotainer, .ranklist-loading {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		background-color: transparent;
-		overflow: hidden;
-		&:before {
-			display: block;
-			content: '';
-			margin-top: 40px;
-		}
-		.lyrics-wrapper {
-			line-height: 42px;
-		    text-align: center;
-		    font-size: 16px;
-		}
-	}
-	.ranklist-loading {
-		bottom: 0;
-		.loading {
-			display: flex;
-			justify-content: center;
-			padding-top: 30%;
-			height: 100%;
-			background-color: $white-base;
-			p {
-				margin-top: 10px;
-				margin-left: 10px;
-				font-size: 10px;
-				color: rgba(0, 0, 0, .5);
-			}
-		}
-	}
 	.music-header{
 		background-color:#fff;
 		color: #3C96FF;
 		border-bottom:1px solid #E3E3E3;
+	}
+	.page{
+		background-color:#fff;
 	}
 	.page .mint-navbar{
 		margin-left:45px;
@@ -176,103 +102,93 @@
 </style>
 <template>
 	<div class="page">
-	<mt-header fixed title="TEAMUP" class="music-header">
-	      <fallback slot="left"></fallback>
-	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </mt-header>
-	    <div class="page-content" style="overflow: hidden;">
-	    	<div class="song-cotainer" v-if="songlist.length" ref="scrollTarget">
-    			<mt-navbar :value="selected" @input="function(val) {selected = val}">
-				  <mt-tab-item id="1" class='mint-tab-item-left'>有趣项目</mt-tab-item>
-				  <mt-tab-item id="2" class='mint-tab-item-right'>优秀小伙伴</mt-tab-item>
-				</mt-navbar>
-				<mt-tab-container v-model="selected" ref="scrollTouch" class='items'>
-					<mt-tab-container-item id="1">
-						<p class="title">找到你感兴趣的组</p>
-						<ul>
-							<li>
-								<img src="../assets/project.jpg" class="project">
-								<div>
-									<div class="name">
-										设计夜校
-									</div>
-									<p class="job">自学 职场技能 学长代练</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-							<li>
-								<img src="../assets/project.jpg" class="project">
-								<div>
-									<div class="name">
-										设计夜校
-									</div>
-									<p class="job">自学 职场技能 学长代练</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-							<li>
-								<img src="../assets/project.jpg" class="project">
-								<div>
-									<div class="name">
-										设计夜校
-									</div>
-									<p class="job">自学 职场技能 学长代练</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-						</ul>
-					</mt-tab-container-item>
-					<mt-tab-container-item id="2" v-if="selected == 2">
-						<p class="title">找到你感兴趣的小伙伴</p>
-						<ul>
-							<li>
-								<img src="../assets/users.jpg">
-								<div>
-									<div class="name">
-										<span>cheeky in china</span>
-										<span class="link">查看他项目</span>
-									</div>
-									<p class="job">design sprint</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-							<li>
-								<img src="../assets/users.jpg">
-								<div>
-									<div class="name">
-										<span>cheeky in china</span>
-										<span class="link">查看他项目</span>
-									</div>
-									<p class="job">design sprint</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-						</ul>
-					</mt-tab-container-item>
-				</mt-tab-container>
-	    	</div>
-	    	<div class="ranklist-loading" v-else>
-	    		<div class="loading">
-	    			<mt-spinner type="fading-circle"></mt-spinner>
-	    			<p>正在载入...</p>
-	    		</div>
-	    	</div>
-    	</div>
+		<mt-header fixed title="TEAMUP" class="music-header">
+		      <fallback slot="left"></fallback>
+		      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
+		    </mt-header>
+		<mt-navbar :value="selected" @input="function(val) {selected = val}">
+		  <mt-tab-item id="1" class='mint-tab-item-left'>有趣项目</mt-tab-item>
+		  <mt-tab-item id="2" class='mint-tab-item-right'>优秀小伙伴</mt-tab-item>
+		</mt-navbar>
+		<mt-tab-container v-model="selected" ref="scrollTouch" class='items'>
+			<mt-tab-container-item id="1">
+				<p class="title">找到你感兴趣的组</p>
+				<ul>
+					<li>
+						<img src="../assets/project.jpg" class="project">
+						<div>
+							<div class="name">
+								设计夜校
+							</div>
+							<p class="job">自学 职场技能 学长代练</p>
+							<p class="label">
+								<span>标签</span>
+								<span>标签</span>
+							</p>
+						</div>
+					</li>
+					<li>
+						<img src="../assets/project.jpg" class="project">
+						<div>
+							<div class="name">
+								设计夜校
+							</div>
+							<p class="job">自学 职场技能 学长代练</p>
+							<p class="label">
+								<span>标签</span>
+								<span>标签</span>
+							</p>
+						</div>
+					</li>
+					<li>
+						<img src="../assets/project.jpg" class="project">
+						<div>
+							<div class="name">
+								设计夜校
+							</div>
+							<p class="job">自学 职场技能 学长代练</p>
+							<p class="label">
+								<span>标签</span>
+								<span>标签</span>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="2" v-if="selected == 2">
+				<p class="title">找到你感兴趣的小伙伴</p>
+				<ul>
+					<li>
+						<img src="../assets/users.jpg">
+						<div>
+							<div class="name">
+								<span>cheeky in china</span>
+								<span class="link">查看他项目</span>
+							</div>
+							<p class="job">design sprint</p>
+							<p class="label">
+								<span>标签</span>
+								<span>标签</span>
+							</p>
+						</div>
+					</li>
+					<li>
+						<img src="../assets/users.jpg">
+						<div>
+							<div class="name">
+								<span>cheeky in china</span>
+								<span class="link">查看他项目</span>
+							</div>
+							<p class="job">design sprint</p>
+							<p class="label">
+								<span>标签</span>
+								<span>标签</span>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</mt-tab-container-item>
+		</mt-tab-container>
 	</div>
 </template>
 	
