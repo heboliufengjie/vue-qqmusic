@@ -101,7 +101,8 @@
 	}
 </style>
 <template>
-	<div class="page">
+	<div class="page" 热发
+	scrollTarget>
 		<mt-header fixed title="TEAMUP" class="music-header">
 		      <fallback slot="left"></fallback>
 		      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
@@ -295,7 +296,7 @@
 			_blurringCover(percentage) {
 				let blur = 30,
 					musicCover = this.$refs.musicCover;
-				musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
+				// musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
 			},
 			_getDayOfYear: getDayOfYear,
 			randomPlayAll() {

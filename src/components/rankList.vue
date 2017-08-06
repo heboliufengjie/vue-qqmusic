@@ -10,7 +10,7 @@
 	    
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
-		    	 <div class="music-cover" 
+		    	 <div a='3' class="music-cover" 
 		    	 	  ref="musicCover" 
 		    	 	  :style="{backgroundImage:`url(${topinfo.pic_album})`}"></div>
 		    	 <div class="title-wrap">
@@ -19,13 +19,13 @@
 		    	 </div>
 		    	 <div class="cover-overlay"></div>
 		    </div>
-	    	<div class="song-cotainer" v-if="songlist.length" ref="scrollTarget">
+	    	<div class="song-cotainer" v-if="songlist.length" ref="scrollTarget" a='2'>
     			<mt-navbar :value="selected" @input="function(val) {selected = val}">
 				  <mt-tab-item id="1">单曲</mt-tab-item>
 				  <mt-tab-item id="2">详情</mt-tab-item>
 				  <!-- <mt-tab-item id="3">歌词本</mt-tab-item> -->
 				</mt-navbar>
-				<mt-tab-container v-model="selected" ref="scrollTouch">
+				<mt-tab-container v-model="selected" ref="scrollTouch" a="1">
 					<mt-tab-container-item id="1">
 						<ul>
 							<li>
@@ -158,6 +158,7 @@
 					property: 'translateY',
 					max: 0,
 					change(pos) {
+						console.log('pos',pos);
 						let coverHeight = -scrollTouch.clientWidth*.7 + 40;
 						function enableScroll() {
 							this.fixed = scrollTouch.scrollTop > 0 ? true : false;
