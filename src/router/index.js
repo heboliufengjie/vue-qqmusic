@@ -51,6 +51,14 @@ const router = new Router({
         require(['@/components/_lists'], resolve);
       }
     },
+    {
+      path: '/add_item',
+      name: 'add_item',
+      component(resolve) {
+        require(['@/components/_add_item'], resolve);
+      }
+    },
+    //_add_item.vue
   ]
 });
 

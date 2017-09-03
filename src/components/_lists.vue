@@ -75,8 +75,8 @@
 	    	</div>
     	</div>
     	<div class="tip">
-    		<span>添加项目</span>
-    		<span>个人展示</span>
+    		<span @click='LinkAddItem()'>添加项目</span>
+    		<span @click='LinkPersonalDisplay()'>个人展示</span>
     	</div>
 	</div>
 </template>
@@ -194,7 +194,13 @@
 				this.playSong('next');
 			},
 			...mapMutations(NameSpace, ['switchPlayOrder', 'stackSonglist']),
-			...mapActions(NameSpace, ['playSong'])
+			...mapActions(NameSpace, ['playSong']),
+			LinkAddItem(){
+				console.log('LinkAddItem')
+			},
+			LinkPersonalDisplay(){
+				console.log('LinkPersonalDisplay')
+			}
 		},
 		components: {
 			headerVue(resolve) {
