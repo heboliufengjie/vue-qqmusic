@@ -146,6 +146,16 @@ register
 
 http://localhost:8080/register
 
+password_find
+
+http://localhost:8080/password_find
+
+
+
+
+
+
+
 TEAMUP
 
 

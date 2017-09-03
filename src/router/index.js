@@ -23,6 +23,13 @@ const router = new Router({
         require(['@/components/_register'], resolve);
       }
     },
+     {
+      path: '/password_find',
+      name: 'password_find',
+      component(resolve) {
+        require(['@/components/_password_find'], resolve);
+      }
+    },
     {
       path: '/lists/:id',
       name: 'lists',

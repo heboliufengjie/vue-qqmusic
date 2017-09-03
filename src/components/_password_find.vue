@@ -27,24 +27,7 @@
     color: #fff;
     background-color: #26a2ff;
     margin-top: 30px;
-}
-.mint-checklist{
-	position: relative;
-}
-.find-psw{
-	position: absolute;
-	right: 10px;
-	bottom: 16px;
-	font-size: 12px;
-	
-}
-.find-psw a{
-	text-decoration: none;
-	color: #888;
-}
-
-.other{
-
+    margin-bottom: 24px;
 }
 
 .other span{
@@ -53,25 +36,26 @@
 .other .register{
 	float: right;
 }
-
-
 </style>
 <template>
 	<div class="page">
-		<p class="logo">logo</p>
+		<p class="logo">password_find</p>
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">邮箱</label>
 			<input type="text"  v-model.trim="email" @blur="blur(email,'email')" class="mint-field-core">
 		</div>
 		<div class="mint-checklist">
-			<label class="mint-checklist-title">密码</label>
+			<label class="mint-checklist-title">输入新密码</label>
 			<input type="password"  v-model.trim="password" @blur="blur(password,'password')"  class="mint-field-core">
-			<label class="find-psw"><a href="/password_find">忘记密码</a></label>
 		</div>
-		<mt-button size="large" class="mint-button--primary" @click="submit()">登录</mt-button>
+		<div class="mint-checklist">
+			<label class="mint-checklist-title">密码</label>
+			<input type="password"  v-model.trim="password_old" @blur="blur(password_old,'password_old')"  class="mint-field-core">
+		</div>
+		<mt-button size="large" class="mint-button--primary" @click="submit()">重置密码</mt-button>
 		<label class="mint-checklist-title other">
-			<span><a href="#">微信登录</a></span>
-			<span class='register'>还没有账号<a href="/register">去注册</a></span>
+			<span><a href="/register">注册新账号</a></span>
+			<span class='register'><a href="/">登录</a></span>
 		</label>
 
 	</div>
@@ -87,8 +71,10 @@
 		name: 'login',
 		data() {
 			return {
+				username:'',
 				email:'',
 				password:'',
+				password_old:'',
 			}
 		},
 		methods:{
@@ -101,13 +87,21 @@
 					Toast('密码不能为空！');
 					return false;
 				}
-				//console.log('email',isEmail(this.email));
-				console.log('password',this.password);
+				if(!this.password_old){
+					Toast('密码不能为空！');
+					return false;
+				}
+				if(this.password !== this.password_old){
+					Toast('密码不一样，请重新填写！');
+					return false;
+				}
 			},
 			blur(data,type){
+				//password_old
 				if(type ==='email'){
 					if(!data){
 						Toast(' 邮箱不能为空！');
+						return false;
 					}else if(!isEmail(data)){
 						Toast(' 请重新填写邮箱！');
 						return false;
@@ -115,6 +109,12 @@
 				}else if(type ==='password'){
 					if(!data){
 						Toast(' 密码不能为空！');
+						return false;
+					}
+				}else if(type ==='password_old'){
+					if(!data){
+						Toast(' 密码不能为空！');
+						return false;
 					}
 				}
 			}
