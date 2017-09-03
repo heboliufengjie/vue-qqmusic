@@ -150,6 +150,13 @@ password_find
 
 http://localhost:8080/password_find
 
+me
+
+http://localhost:8080/me
+
+edit_lables
+
+http://localhost:8080/edit_lables
 
 
 

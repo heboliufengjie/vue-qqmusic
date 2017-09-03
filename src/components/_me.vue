@@ -83,7 +83,7 @@
 		<div class="inner-page">
 			<label class="mint-checklist-title other">
 				<span>标签</span>
-				<span class="text-right">编辑</span>
+				<span class="text-right" @click="linkEditLables()">编辑</span>
 			</label>
 			<div class="label-lists">
 				<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
@@ -101,7 +101,6 @@
 	</div>
 </template>
 <script>
-	import { PaletteButton } from 'mint-ui';
 	export default {
 		name: 'me',
 		data() {
@@ -135,6 +134,9 @@
 			submit(){
 				console.log('submit')
 			},
+			linkEditLables(){
+				location.href="/edit_lables";
+			}
 		},
 	};
 </script>

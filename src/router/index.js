@@ -38,6 +38,13 @@ const router = new Router({
       }
     },
     {
+      path: '/edit_lables',
+      name: 'edit_lables',
+      component(resolve) {
+        require(['@/components/_edit_lables'], resolve);
+      }
+    },
+    {
       path: '/lists/:id',
       name: 'lists',
       component(resolve) {
