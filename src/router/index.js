@@ -31,6 +31,13 @@ const router = new Router({
       }
     },
     {
+      path: '/me',
+      name: 'me',
+      component(resolve) {
+        require(['@/components/_me'], resolve);
+      }
+    },
+    {
       path: '/lists/:id',
       name: 'lists',
       component(resolve) {
