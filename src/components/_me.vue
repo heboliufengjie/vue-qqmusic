@@ -11,6 +11,25 @@
  	background:#ccc;
  	margin-bottom: 16px;
  }
+ .upload{
+	padding-top: 28px;
+	margin:0 auto;
+	width: 65px;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+}
+.palette{
+	background-color: rgb(38, 162, 255);
+	color: #fff;
+	width: 65px;
+	height: 65px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 65px;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
 .other{
 	display: flex;
  	margin-right: 0;
@@ -51,25 +70,7 @@
 .mint-button--primary{
 	margin-top: 15px;
 }
-.upload{
-	padding-top: 28px;
-	margin:0 auto;
-	width: 65px;
-	font-size: 12px;
-	text-align: center;
-	color: #fff;
-}
-.palette{
-	background-color: rgb(38, 162, 255);
-	color: #fff;
-	width: 65px;
-	height: 65px;
-	border-radius: 50%;
-	text-align: center;
-	line-height: 65px;
-	font-size: 16px;
-	margin-bottom: 5px;
-}
+
 </style>
 <template>
 	<div class="page">

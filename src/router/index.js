@@ -58,7 +58,14 @@ const router = new Router({
         require(['@/components/_add_item'], resolve);
       }
     },
-    //_add_item.vue
+    {
+      path: '/personal_display/:id',
+      name: 'personal_display',
+      component(resolve) {
+        require(['@/components/_personal_display'], resolve);
+      }
+    },
+    //personal_display.vue
   ]
 });
 

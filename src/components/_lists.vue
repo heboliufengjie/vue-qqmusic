@@ -197,9 +197,12 @@
 			...mapActions(NameSpace, ['playSong']),
 			LinkAddItem(){
 				console.log('LinkAddItem')
+				//http://localhost:8080/add_item
+				location.href='/add_item';
 			},
 			LinkPersonalDisplay(){
 				console.log('LinkPersonalDisplay')
+				location.href='/personal_display';
 			}
 		},
 		components: {
