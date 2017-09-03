@@ -135,6 +135,9 @@ npm run e2e
 npm test
 ```
 
+
+http://mint-ui.github.io/docs/#/zh-cn2/field
+
 login  
 
 http://localhost:8080/login
