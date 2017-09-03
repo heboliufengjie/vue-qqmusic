@@ -158,14 +158,7 @@ edit_lables
 
 http://localhost:8080/edit_lables
 
-
-
-
-
-
-TEAMUP
-
-
+lists
 
 http://localhost:8080/lists/4
 

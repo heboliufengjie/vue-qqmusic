@@ -1,3 +1,8 @@
+<style scoped>
+  .mint-header{
+    background-color: #000;
+  }
+</style>
 <template>
   <header
     class="mint-header"
