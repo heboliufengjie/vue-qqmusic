@@ -28,19 +28,6 @@
     background-color: #26a2ff;
     margin-top: 30px;
 }
-.mint-checklist{
-	position: relative;
-}
-.find-psw{
-	position: absolute;
-	right: 10px;
-	bottom: 16px;
-	font-size: 12px;
-	color: #888;
-}
-.other{
-
-}
 
 .other span{
 	display: inline-block;
@@ -53,7 +40,11 @@
 </style>
 <template>
 	<div class="page">
-		<p class="logo">logo</p>
+		<p class="logo">register</p>
+		<div class="mint-checklist">
+			<label class="mint-checklist-title">用户名</label>
+			<input type="text"  v-model.trim="username" @blur="blur(username,'username')" class="mint-field-core">
+		</div>
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">邮箱</label>
 			<input type="text"  v-model.trim="email" @blur="blur(email,'email')" class="mint-field-core">
@@ -61,12 +52,10 @@
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">密码</label>
 			<input type="password"  v-model.trim="password" @blur="blur(password,'password')"  class="mint-field-core">
-			<label class="find-psw">忘记密码</label>
 		</div>
-		<mt-button size="large" class="mint-button--primary" @click="submit()">登录</mt-button>
+		<mt-button size="large" class="mint-button--primary" @click="submit()">注册</mt-button>
 		<label class="mint-checklist-title other">
-			<span><a href="#">微信登录</a></span>
-			<span class='register'>还没有账号<a href="/register">去注册</a></span>
+			<span class='register'>已有账号<a href="/">登录</a></span>
 		</label>
 
 	</div>
@@ -82,12 +71,17 @@
 		name: 'login',
 		data() {
 			return {
+				username:'',
 				email:'',
 				password:'',
 			}
 		},
 		methods:{
 			submit(){
+				if(!this.username){
+					Toast('用户名不能为空！');
+					return false;
+				}
 				if(!this.email){
 					Toast('邮箱不能为空！');
 					return false;
@@ -100,9 +94,15 @@
 				console.log('password',this.password);
 			},
 			blur(data,type){
-				if(type ==='email'){
+				if(type ==='username'){
+					if(!data){
+						Toast(' 用户名不能为空！');
+						return false;
+					}
+				}else if(type ==='email'){
 					if(!data){
 						Toast(' 邮箱不能为空！');
+						return false;
 					}else if(!isEmail(data)){
 						Toast(' 请重新填写邮箱！');
 						return false;
@@ -110,6 +110,7 @@
 				}else if(type ==='password'){
 					if(!data){
 						Toast(' 密码不能为空！');
+						return false;
 					}
 				}
 			}

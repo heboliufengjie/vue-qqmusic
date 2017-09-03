@@ -17,6 +17,13 @@ const router = new Router({
       }
     },
     {
+      path: '/register',
+      name: 'register',
+      component(resolve) {
+        require(['@/components/_register'], resolve);
+      }
+    },
+    {
       path: '/lists/:id',
       name: 'lists',
       component(resolve) {

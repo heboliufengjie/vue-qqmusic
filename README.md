@@ -142,6 +142,10 @@ login
 
 http://localhost:8080/login
 
+register
+
+http://localhost:8080/register
+
 TEAMUP
 
 
