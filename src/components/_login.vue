@@ -101,8 +101,20 @@
 					Toast('密码不能为空！');
 					return false;
 				}
-				//console.log('email',isEmail(this.email));
+				
 				console.log('password',this.password);
+				this.$http.post("/user/signin.do",{
+					email:this.email,
+					password:this.password,
+				}).then(
+		            function (res) {
+		                // 处理成功的结果
+		                console.log('>>1',res);
+		            },function (res) {
+		            // 处理失败的结果
+		            console.log('>>2',res);
+		            }
+		        );
 			},
 			blur(data,type){
 				if(type ==='email'){

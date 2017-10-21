@@ -7,9 +7,13 @@ import store from './store';
 import router from './router';
 import Mint from './mintUi';
 
+
 // Inject Global Css And Themes Css
 import './sass/index.scss';
 import './sass/themes/default.scss';
+
+import VueResource from 'vue-resource';
+Vue.use(VueResource);
 
 Vue.config.productionTip = false;
 
