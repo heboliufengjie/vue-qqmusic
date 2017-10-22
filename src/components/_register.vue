@@ -41,10 +41,10 @@
 <template>
 	<div class="page">
 		<p class="logo">register</p>
-		<div class="mint-checklist">
+		<!-- <div class="mint-checklist">
 			<label class="mint-checklist-title">用户名</label>
 			<input type="text"  v-model.trim="username" @blur="blur(username,'username')" class="mint-field-core">
-		</div>
+		</div> -->
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">邮箱</label>
 			<input type="text"  v-model.trim="email" @blur="blur(email,'email')" class="mint-field-core">
@@ -78,10 +78,10 @@
 		},
 		methods:{
 			submit(){
-				if(!this.username){
-					Toast('用户名不能为空！');
-					return false;
-				}
+				// if(!this.username){
+				// 	Toast('用户名不能为空！');
+				// 	return false;
+				// }
 				if(!this.email){
 					Toast('邮箱不能为空！');
 					return false;
@@ -90,6 +90,20 @@
 					Toast('密码不能为空！');
 					return false;
 				}
+				console.log('password1',this.password);
+				this.$http.post("/user/signup.do",{
+					email:this.email,
+					password:this.password,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+		              if(res.data.success){
+		              	console.log('注册')
+		              }else{
+		              	console.log('>>',res.data.msg)
+		              }
+		            }
+		        );
 				//console.log('email',isEmail(this.email));
 				console.log('password',this.password);
 			},

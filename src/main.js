@@ -15,6 +15,7 @@ import './sass/themes/default.scss';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
+
 Vue.config.productionTip = false;
 
 // Sync Register Global Components
