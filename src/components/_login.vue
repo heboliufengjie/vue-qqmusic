@@ -54,6 +54,11 @@
 	float: right;
 }
 
+.other a{
+	color: #000;
+	text-decoration: none;
+}
+
 
 </style>
 <template>
@@ -78,8 +83,8 @@
 </template>
 <script>
 	import Vue from 'vue';
-	Vue.http.options.emulateHTTP = true;
 	import { Toast } from 'mint-ui';
+	Vue.http.options.emulateHTTP = true;
 	function isEmail(str){
 	 var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
 	 return reg.test(str);
@@ -105,7 +110,7 @@
 				}
 				
 				//登录
-				if(false){
+				if(!false){
 					this.$http.post("/user/signin.do",{
 						email:this.email,
 						password:this.password,
@@ -113,7 +118,9 @@
 					  emulateJSON: true
 					}).then(function (res) {
 			              if(res.data.success){
-			              	console.log('登录')
+			              	//console.log('登录')
+			              	//登录成功后跳转到首页列表
+			              	location.href="/lists"
 			              }else{
 			              	Toast(res.data.msg)
 			              }
@@ -136,78 +143,12 @@
 			            }
 			        );
 		        }
-		        //创建项目
-				if(false){
-					this.$http.post("/project/createProject.do",{
-						name:'my first project',
-						profile:'my name is fengjie.liu',
-					},{
-					  emulateJSON: true
-					}).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
-		        //获得用户加入的项目(应该传id)
-				if(false){
-					this.$http.post("/project/getUserJoinedProject.do"
-					// 	,{
-					// 	name:'my first project',
-					// 	profile:'my name is fengjie.liu',
-					// },{
-					//   emulateJSON: true
-					// }
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
-		        //获得一个项目的信息
-				if(false){
-					this.$http.post("/project/getProjectInfo.do",{
-						id:5,//debug
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
-		        //获得项目的成员
-				if(false){
-					this.$http.post("/project/getProjectMemeber.do",{
-						id:5,//debug
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+		      
+		       
+		       
+
 		        //为一个项目添加标签
-				if(!false){
+				if(false){
 					this.$http.post("/project/addLabelForProject.do",{
 						id:5,//debug
 						labelId:8//debug

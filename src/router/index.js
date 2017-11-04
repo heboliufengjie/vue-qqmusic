@@ -59,6 +59,13 @@ const router = new Router({
       }
     },
     {
+      path: '/edit_item/:id',
+      name: 'edit_item',
+      component(resolve) {
+        require(['@/components/_edit_item'], resolve);
+      }
+    },
+    {
       path: '/personal_display/:id',
       name: 'personal_display',
       component(resolve) {
