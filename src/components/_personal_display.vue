@@ -1,90 +1,3 @@
-<template>
-	<div class="page">
-		<header-vue fixed class="music-header-2">
-	      <fallback slot="left"></fallback>
-	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </header-vue>
-	    <div class="header">
-	    	<div class="header-inner">
-		    	<img src="" class="bg">
-		    	<span>编辑</span>
-				<div class="upload">
-				 	<img src="" v-if="!false">
-				</div>
-				<div class="name">Jessie Smith</div>
-				<div class="desc">I wasn't the girl who played dress up and dreamt of a pink Barbie car.</div>
-				<div class="label-lists">
-					<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
-				</div>
-			</div>
-		</div>
-		<div class="item-lists">
-			<mt-tab-container class='items'>
-				<mt-tab-container-item>
-					<p class="title">Ta创建的项目</p>
-					<ul>
-						<li v-for='item in items'>
-							<img src="../assets/project.jpg" class="project">
-							<div>
-								<p>设计夜校</p>
-								<p class="job">自学 职场技能 学长代练</p>
-								<p class="label">
-									<span>标签</span>
-									<span>标签</span>
-								</p>
-							</div>
-						</li>
-					</ul>
-				</mt-tab-container-item>
-			</mt-tab-container>
-		</div>
-    	<div class="tip">
-    		<span @click='LinkAddItem()'>添加项目</span>
-    		<span @click='LinkPersonalDisplay()'>个人展示</span>
-    	</div>
-	</div>
-</template>
-	
-<script>
-	import fallback from './fallback.vue';
-	import { apiHandler } from '@/api/index';
-	export default {
-		name: 'personal_display',
-		data() {
-			return {
-				items:[1,2,3,4,5],
-				desc:'',
-				labels:[
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},
-				 ],
-			}
-		},
-		components: {
-			headerVue(resolve) {
-				require(['./header.vue'], resolve);
-			}
-		}
-	}
-</script>
-
 <style lang="sass">
 .page{
 	background-color:#fff;
@@ -127,12 +40,16 @@
 	height:120px;
 	background-color:#ccc;
 }
-.header span{
+.header .edit{
 	position:absolute;
 	right:24px;
 	top:24px;
 	color:#fff;
 	font-size:12px;
+}
+.header .edit a{
+	text-decoration:none;
+	color:#fff;
 }
 .upload{
 	position:relative;
@@ -248,3 +165,105 @@
 		   
 	}
 </style>
+<template>
+	<div class="page">
+		<header-vue fixed class="music-header-2">
+	      <fallback slot="left"></fallback>
+	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
+	    </header-vue>
+	    <div class="header">
+	    	<div class="header-inner">
+		    	<img src="" class="bg">
+		    	<span class="edit"><a :href="editLink()">编辑</a></span>
+				<div class="upload">
+				 	<img src="" v-if="!false">
+				</div>
+				<div class="name">Jessie Smith</div>
+				<div class="desc">I wasn't the girl who played dress up and dreamt of a pink Barbie car.</div>
+				<div class="label-lists">
+					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+				</div>
+			</div>
+		</div>
+		<div class="item-lists">
+			<mt-tab-container class='items'>
+				<mt-tab-container-item>
+					<p class="title">Ta创建的项目</p>
+					<ul>
+						<li v-for='item in lists'>
+							<img src="../assets/project.jpg" class="project">
+							<div>
+								<p>{{item.name}}</p>
+								<p class="job">{{item.profile}}</p>
+								<p class="label">
+									<span>标签</span>
+									<span>标签</span>
+								</p>
+							</div>
+						</li>
+					</ul>
+				</mt-tab-container-item>
+			</mt-tab-container>
+		</div>
+    	<div class="tip">
+    		<span @click='LinkAddItem()'>添加项目</span>
+    		<span @click='LinkPersonalDisplay()'>个人展示</span>
+    	</div>
+	</div>
+</template>
+	
+<script>
+	import fallback from './fallback.vue';
+	import { apiHandler } from '@/api/index';
+	export default {
+		name: 'personal_display',
+		data() {
+			return {
+				desc:'',
+				labels:[],
+				lists:[],
+			}
+		},
+		components: {
+			headerVue(resolve) {
+				require(['./header.vue'], resolve);
+			}
+		},
+		created(){
+			this.getUserCreteProject();
+			this.getUserLabel();
+		},
+		methods:{
+
+			//获得一个用户的所有标签
+			getUserLabel(){
+				this.$http.post("/label/getUserLabel.do").then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+		              	this.labels = data.list;
+		              }
+		            }
+		        );
+			},
+				
+			// 获取用户创建的项目
+			getUserCreteProject(){
+				this.$http.post("/project/getUserCreateProject.do").then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+		              	this.lists = data.list;
+		              }
+		            }
+		        );
+			},
+
+			//editLink
+
+			editLink(){
+				return '/me';
+			},
+
+		}
+	}
+</script>
+

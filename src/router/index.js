@@ -38,40 +38,54 @@ const router = new Router({
       }
     },
     {
-      path: '/edit_lables',
-      name: 'edit_lables',
+      path: '/personal_display',
+      name: 'personal_display',
       component(resolve) {
-        require(['@/components/_edit_lables'], resolve);
+        require(['@/components/_personal_display'], resolve);
       }
     },
     {
-      path: '/lists/:id',
+      path: '/lables_edit/:id',
+      name: 'lables_edit',
+      component(resolve) {
+        require(['@/components/_lables_edit'], resolve);
+      }
+    },
+    {
+      path: '/lists',
       name: 'lists',
       component(resolve) {
         require(['@/components/_lists'], resolve);
       }
     },
     {
-      path: '/add_item',
-      name: 'add_item',
+      path: '/item_add',
+      name: 'item_add',
       component(resolve) {
-        require(['@/components/_add_item'], resolve);
+        require(['@/components/_item_add'], resolve);
       }
     },
     {
-      path: '/edit_item/:id',
-      name: 'edit_item',
+      path: '/item_detail/:id',
+      name: 'item_detail',
       component(resolve) {
-        require(['@/components/_edit_item'], resolve);
+        require(['@/components/_item_detail'], resolve);
       }
     },
     {
-      path: '/personal_display/:id',
-      name: 'personal_display',
+      path: '/item_edit/:id',
+      name: 'item_edit',
       component(resolve) {
-        require(['@/components/_personal_display'], resolve);
+        require(['@/components/_item_edit'], resolve);
       }
     },
+    // {
+    //   path: '/personal_display/:id',
+    //   name: 'personal_display',
+    //   component(resolve) {
+    //     require(['@/components/_personal_display'], resolve);
+    //   }
+    // },
     //personal_display.vue
   ]
 });

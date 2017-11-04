@@ -42,9 +42,9 @@ me
 
 http://localhost:8080/me
 
-edit_lables
+lables_edit
 
-http://localhost:8080/edit_lables
+http://localhost:8080/lables_edit
 
 lists
 

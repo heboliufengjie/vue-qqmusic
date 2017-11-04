@@ -167,7 +167,7 @@ export default {
 
 		//edit project link
 		editProjectLink(data){
-			return '/add_item/'+data.id;
+			return '/item_edit/'+data.id;
 		},
 	},
 };

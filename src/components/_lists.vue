@@ -294,7 +294,7 @@
 	       //添加项目
 			LinkAddItem(){
 				console.log('LinkAddItem')
-				location.href='/add_item';
+				location.href='/item_add';
 			},
 
 			_initScroll() {

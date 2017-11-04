@@ -127,22 +127,7 @@
 			            }
 			        );
 		        }
-		        //修改用户简介
-				if(false){
-					this.$http.post("/user/modifyProfile.do",{
-						profile:'my name is fengjie.liu',
-					},{
-					  emulateJSON: true
-					}).then(function (res) {
-			              if(res.data.success){
-			              	console.log('修改用户简介')
-			              	Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+
 		      
 		       
 		       
@@ -182,23 +167,7 @@
 			            }
 			        );
 		        }
-		        //获得某个项目关联的标签 debug
-				if(false){
-					this.$http.post("/project/getProjectLabel.do",{
-						id:5
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+
 		        //创建标签
 				if(false){
 					this.$http.post("/label/createLabel.do",{
@@ -251,24 +220,7 @@
 			            }
 			        );
 		        }
-		        //获得一个用户的所有标签（用户id）
-				if(false){
-					this.$http.post("/label/getUserLabel.do"
-					// ,{
-					// 	id:5,
-					// },{
-					//   emulateJSON: true
-					// }
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+		       
 			},
 			blur(data,type){
 				if(type ==='email'){

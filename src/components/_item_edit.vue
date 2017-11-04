@@ -57,6 +57,22 @@
 	margin-top: 15px;
 }
 
+.wrapper-project-label{
+	display: flex;
+	display: -webkit-flex; /* Safari */
+	flex-direction: row ;
+	justify-content: space-between;
+	color: #000;
+	font-size: 14px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+.wrapper-project-label a{
+	text-decoration: none;
+	font-size: 12px;
+	color: #3C96FF;
+}
+
 </style>
 <template>
 	<div class="page">
@@ -68,15 +84,28 @@
 			<div class="title">项目资料</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目名称</label>
-				<input type="text"  v-model.trim="projectName"  placeholder="请输入项目名称" class="mint-field-core">
+				<input type="text"  v-model.trim="projectInfo.name"  placeholder="请输入项目名称" class="mint-field-core">
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目简介</label>
-				<textarea v-model.trim="projectDesc"  placeholder="请输入项目简介" class="mint-field-core"></textarea>
+				<textarea v-model.trim="projectInfo.profile"  placeholder="请输入项目简介" class="mint-field-core"></textarea>
 			</div>
 			<div class="mint-checklist label-lists">
-				<label class="mint-checklist-title">项目标签</label>
-				<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
+				<!-- <label class="mint-checklist-title">项目标签</label> -->
+				<ul class="wrapper-project-label">
+			   		<li class="project-label">项目标签</li>
+			   		<li @click="editProjectLabelsLink()">编辑</li>
+			   </ul>
+			   <!-- label -->
+				<div v-if="labels.length">
+					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+				</div>
+				<!-- /label -->
+				<!-- no label -->
+				<div v-else>
+					没有相关标签,请编辑标签
+				</div>
+				<!-- /no label -->
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
@@ -95,52 +124,67 @@ export default {
 			projectName:'',
 			projectDesc:'',
 			projectDetailDesc:'',
-			labels:[
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},
-			 ],
+			labels:[],
+			projectInfo:{},
 		}
 	},
-	
+	created(){
+		this.getProjectInfo();
+		this.getProjectLabel();
+	},
 	methods:{
+		//get project label
+		getProjectLabel(){
+			this.$http.post("/project/getProjectLabel.do",{
+				id:this.$route.params.id
+			},{
+			  emulateJSON: true
+			}
+			).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.labels = data.list;
+	              }
+	            }
+	        );
+		},
+
+		getProjectInfo(){
+			this.$http.post("/project/getProjectInfo.do",{
+				id:this.$route.params.id
+			},{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.projectInfo = data.project;
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+		},
 		//创建项目
 		createProject(){
-			console.log('projectName',this.projectName);
-			if(!this.projectName){
+			if(!this.projectInfo.name){
 				Toast('项目名称不能为空！');
 				return false;
 			}
-			if(!this.projectDesc){
+			if(!this.projectInfo.profile){
 				Toast('项目描述不能为空！');
 				return false;
 			}
 
 			this.$http.post("/project/createProject.do",{
-				name:this.projectName,//项目名称
-				profile:this.projectDesc,//项目描述
+				name:this.projectInfo.name,//项目名称
+				profile:this.projectInfo.profile,//项目描述
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
 	              if(res.data.success){
 	              	Toast('创建成功')
 	              	//
+	              	 return false;
 	              	setTimeout(()=>{
 	              		location.href="/edit_item/"+ res.data.projectId;
 	              	},500);
@@ -151,6 +195,13 @@ export default {
 	            }
 	        );
 		},
+
+		//editProjectLabelsLink
+
+		editProjectLabelsLink(){
+			location.href="/lables_edit/"+this.$route.params.id;
+		},
+
 		linkEditLables(){
 			location.href="/edit_lables";
 		}

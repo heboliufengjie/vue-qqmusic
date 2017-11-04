@@ -102,43 +102,63 @@
 	</div>
 </template>
 <script>
-	export default {
-		name: 'me',
-		data() {
-			return {
-				username:'',
-				desc:'',
-				labels:[
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},
-				 ],
+import { Toast } from 'mint-ui';
+export default {
+	name: 'me',
+	data() {
+		return {
+			username:'',
+			desc:'',
+			labels:[
+			 	{
+			 		type:'管理经验',
+			 	},
+			 	{
+			 		type:'管理经验',
+			 	},
+			 	{
+			 		type:'管理经验',
+			 	},{
+			 		type:'管理经验',
+			 	},{
+			 		type:'管理经验',
+			 	},{
+			 		type:'管理经验',
+			 	},{
+			 		type:'管理经验',
+			 	},{
+			 		type:'管理经验',
+			 	},
+			 ],
+			 projectInfo:{},
+		}
+	},
+	methods:{
+		//修改用户简介
+		submit(){
+			if(!this.desc){
+				Toast('个人简介不能为空！');
+				return false;
 			}
+
+			this.$http.post("/user/modifyProfile.do",{
+				profile:this.desc,
+			},{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	Toast('修改成功')
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
 		},
-		methods:{
-			submit(){
-				console.log('submit')
-			},
-			linkEditLables(){
-				location.href="/edit_lables";
-			}
+
+		linkEditLables(){
+			location.href="/edit_lables";
 		},
-	};
+	},
+};
 </script>
 
