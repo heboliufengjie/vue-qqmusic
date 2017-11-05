@@ -56,6 +56,21 @@
 .mint-button--primary{
 	margin-top: 15px;
 }
+.wrapper-project-label{
+	display: flex;
+	display: -webkit-flex; /* Safari */
+	flex-direction: row ;
+	justify-content: space-between;
+	color: #000;
+	font-size: 14px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+.wrapper-project-label a{
+	text-decoration: none;
+	font-size: 12px;
+	color: #3C96FF;
+}
 
 </style>
 <template>
@@ -74,9 +89,26 @@
 				<label class="mint-checklist-title">项目简介</label>
 				<textarea v-model.trim="projectInfo.profile"  placeholder="请输入项目简介" class="mint-field-core"></textarea>
 			</div>
-			<div class="mint-checklist label-lists">
+			<!-- <div class="mint-checklist label-lists">
 				<label class="mint-checklist-title">项目标签</label>
-				<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
+				<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+			</div> -->
+			<div class="mint-checklist label-lists">
+				<!-- <label class="mint-checklist-title">项目标签</label> -->
+				<ul class="wrapper-project-label">
+			   		<li class="project-label">项目标签</li>
+			   		<li @click="editProjectLabelsLink()">编辑</li>
+			   </ul>
+			   <!-- label -->
+				<div v-if="labels.length">
+					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+				</div>
+				<!-- /label -->
+				<!-- no label -->
+				<div v-else>
+					没有相关标签,请编辑标签
+				</div>
+				<!-- /no label -->
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
@@ -95,32 +127,25 @@ export default {
 			projectName:'',
 			projectDesc:'',
 			projectDetailDesc:'',
-			labels:[
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},
-			 ],
+			labels:[],
 			projectInfo:{},
 		}
 	},
+	created(){
+		this.getUserLabel();
+	},
 	
 	methods:{
+		//获得一个用户的所有标签
+		getUserLabel(){
+			this.$http.post("/label/getUserLabel.do").then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.labels = data.list;
+	              }
+	            }
+	        );
+		},
 	
 		//创建项目
 		createProject(){
@@ -152,9 +177,13 @@ export default {
 	            }
 	        );
 		},
-		linkEditLables(){
-			location.href="/edit_lables";
-		}
+
+		//editProjectLabelsLink
+		//当前项目并未创立成功，而为该项目添加标签需要传项目id
+		editProjectLabelsLink(){
+			location.href="/lables_edit/"+this.$route.params.id;
+		},
+
 	},
 };
 </script>

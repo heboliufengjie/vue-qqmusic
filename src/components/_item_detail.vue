@@ -72,7 +72,8 @@
 		   <!--  ／项目简介-->
 		   <!-- labels -->
 		   <div class="project-labels">
-				<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
+				<a href="javascript:;" v-for="label in labels" v-if="labels.length">{{label.name}}</a>
+				<a v-if="!labels.length">暂时没有关联标签，请添加标签</a>
 			</div>
 			<!-- /labels -->
 			<!-- project-number -->
@@ -98,37 +99,34 @@ export default {
 			projectName:'',
 			projectDesc:'',
 			projectDetailDesc:'',
-			labels:[
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},
-			 	{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},{
-			 		type:'管理经验',
-			 	},
-			 ],
-			 projectInfo:{},
-			 projectNumbers:[],
+			labels:[],
+			projectInfo:{},
+			projectNumbers:[],
 		}
 	},
 	created(){
 		this.getProjectInfo();
 		this.getProjectMemeber();
+		this.getProjectLabel();
 	},
 	
 	methods:{
+		//get project label
+		getProjectLabel(){
+			this.$http.post("/project/getProjectLabel.do",{
+				id:this.$route.params.id
+			},{
+			  emulateJSON: true
+			}
+			).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.labels = data.list;
+	              }
+	            }
+	        );
+		},
+
 		//获得项目的成员
 		getProjectMemeber(){
 			this.$http.post("/project/getProjectMemeber.do",{

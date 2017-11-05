@@ -26,33 +26,46 @@ npm test
 
 http://mint-ui.github.io/docs/#/zh-cn2/field
 
-login  
+1、login  
 
-http://localhost:8080/login
+http://localhost:8080
 
-register
+2、register
 
 http://localhost:8080/register
 
-password_find
+3、首页 有趣项目，有趣小伙伴列表
+
+http://localhost:8080/lists
+
+4、password_find（待续）
 
 http://localhost:8080/password_find
 
-me
+5、创建项目（包含创建项目，一个用户所有标签）
+
+http://localhost:8080/item_add
+
+6、项目详情（项目详情、该项目关联标签，该项目成员）
+
+http://localhost:8080/item_detail/16
+
+
+7、个人资料展示
+http://localhost:8080/personal_display
+
+8、个人资料编辑页面
 
 http://localhost:8080/me
+
+
 
 lables_edit
 
 http://localhost:8080/lables_edit
 
-lists
-
-http://localhost:8080/lists/4
-
-add_item
-
-http://localhost:8080/add_item
+为项目添加标签
+http://localhost:8080/lables_edit/14
 
 ______________________
 https://www.babel.cc/share.do?s=1868326287299387
@@ -60,5 +73,9 @@ https://www.babel.cc/share.do?s=1868326287299387
 http://116.62.17.193/user/signin.do
 http://116.62.17.193/user/signin.do
 http://116.62.17.193/project/createProject.do
+
+
+
+https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 
 

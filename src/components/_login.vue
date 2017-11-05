@@ -132,24 +132,7 @@
 		       
 		       
 
-		        //为一个项目添加标签
-				if(false){
-					this.$http.post("/project/addLabelForProject.do",{
-						id:5,//debug
-						labelId:8//debug
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+		        
 		        //获得一个标签下的项目 debug
 				if(false){
 					this.$http.post("/project/getProjectInLabel.do",{

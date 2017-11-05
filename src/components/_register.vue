@@ -98,9 +98,12 @@
 				  emulateJSON: true
 				}).then(function (res) {
 		              if(res.data.success){
-		              	console.log('注册')
+		              	Toast('注册成功');
+		              	setTimeout(()=>{
+		              		location.href="/lists"
+		              	},500);
 		              }else{
-		              	console.log('>>',res.data.msg)
+		              	Toast(res.data.msg);
 		              }
 		            }
 		        );

@@ -40,59 +40,74 @@
 				</div>
 				<a class="mint-searchbar-cancel" v-show='showCancel'>取消</a>
 			</div>
-			<div class="mint-search-list" style="">
+			<!-- <div class="mint-search-list" style="">
 				<div class="mint-search-list-warp"></div>
-			</div>
+			</div> -->
 		</div>
 		<div class="inner-page">
 			<div class="label-lists">
-				<a href="javascript:;" v-for="label in labels">{{label.type}}</a>
+				<a @click="addLabelForProject(label)" :key="label.id" v-for="label in labels">{{label.name}}</a>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-	export default {
-		name: 'edit_lables',
-		data() {
-			return {
-				value:'',
-				showCancel:0,
-				labels:[
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},
-				 	{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},{
-				 		type:'管理经验',
-				 	},
-				 ],
+import { Toast } from 'mint-ui';
+export default {
+	name: 'lables_edit',
+	data() {
+		return {
+			value:'',
+			showCancel:0,
+			labels:[],
+		}
+	},
+	created(){
+		this.getUserLabel();
+	},
+
+	methods:{
+		//获得一个用户的所有标签
+		getUserLabel(){
+			this.$http.post("/label/getUserLabel.do").then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.labels = data.list;
+	              }
+	            }
+	        );
+		},
+
+		//为一个项目添加标签
+		addLabelForProject(data){
+			this.$http.post("/project/addLabelForProject.do",{
+				id:this.$route.params.id,
+				labelId:data.id
+			},{
+			  emulateJSON: true
+			}
+			).then(function (res) {
+	              if(res.data.success){
+	              	Toast('添加成功')
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+		},
+			
+		focus(){
+			this.showCancel = 1;
+		},
+		submit(data){
+			alert(12)
+			if(!data){
+				return false;
+			}else{
+				console.log('submit',data)
 			}
 		},
-		methods:{
-			focus(){
-				this.showCancel = 1;
-			},
-			submit(data){
-				if(!data){
-					return false;
-				}else{
-					console.log('submit',data)
-				}
-			},
-		},
-	};
+	},
+};
 </script>
 
