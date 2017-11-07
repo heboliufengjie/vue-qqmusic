@@ -110,23 +110,39 @@
 				}
 				
 				//登录
-				if(!false){
-					this.$http.post("/user/signin.do",{
-						email:this.email,
-						password:this.password,
-					},{
-					  emulateJSON: true
-					}).then(function (res) {
-			              if(res.data.success){
-			              	//console.log('登录')
-			              	//登录成功后跳转到首页列表
-			              	location.href="/lists"
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+				
+				this.$http.post("/user/signin.do",{
+					email:this.email,
+					password:this.password,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+
+		              	//存入localStorage
+		              	if(!window.localStorage){
+				            alert("浏览器支持localstorage");
+				            return false;
+				        }else{
+				            var storage=window.localStorage;
+				            var d=JSON.stringify(data);
+				            storage.setItem("teamUp",d);
+				             //将JSON字符串转换成为JSON对象输出
+				            var json=storage.getItem("teamUp");
+				            var jsonObj=JSON.parse(json);
+				            //删除
+				            //storage.removeItem("teamUp");
+				        }
+		              
+		              	//登录成功后跳转到首页列表
+		              	location.href="/lists"
+		              }else{
+		              	Toast(res.data.msg)
+		              }
+		            }
+		        );
+		       
 
 		      
 		       

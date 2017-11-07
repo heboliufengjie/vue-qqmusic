@@ -110,10 +110,10 @@
 				</div>
 				<!-- /no label -->
 			</div>
-			<div class="mint-checklist">
+			<!-- <div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
 				<textarea v-model.trim="projectDetailDesc"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
-			</div>
+			</div> -->
 			<mt-button size="large" class="mint-button--primary" @click="createProject()">确定</mt-button>
 		</div>
 	</div>
@@ -132,10 +132,22 @@ export default {
 		}
 	},
 	created(){
-		this.getUserLabel();
+		//this.getUserLabel();
+		this.getSystemLabel();
 	},
 	
 	methods:{
+		//获得系统所有的标签
+		getSystemLabel(){
+			this.$http.post("/label/getSystemLabel.do").then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.labels = data.list;
+	              }
+	            }
+	        );
+		},
+
 		//获得一个用户的所有标签
 		getUserLabel(){
 			this.$http.post("/label/getUserLabel.do").then(function (res) {

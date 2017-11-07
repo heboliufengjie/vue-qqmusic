@@ -85,13 +85,27 @@
 	color: #3C96FF;
 }
 
+.avatar{
+	width: 74px;
+	height: 74px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
 </style>
 <template>
 	<div class="page">
 		<div class="header">
 			<div class="upload">
-			 	<img src="" v-if="false">	
-			 	<div class="palette">+</div>	
+				<label v-on:change="upload">
+			 		<img :src="avatar" v-if="showAvatar" class="avatar">
+			 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
+			 	</label>	
+			 	<label v-on:change="upload">
+			 	<div class="palette" v-if="!showAvatar" >+
+			 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
+			 	</div>
+			 	</label>	
 				<p>上传头像</p>
 			</div>
 		</div>
@@ -132,6 +146,8 @@ export default {
 		return {
 			username:'',
 			desc:'',
+			showAvatar:false,
+			avatar:'',
 			labels:[],
 			projectInfo:{},
 		}
@@ -139,8 +155,83 @@ export default {
 
 	created(){
 		this.getUserLabel();
+		this.getUserInfo();
+		//this.getAvatar();
 	},
 	methods:{
+		//getAvatar
+		// getAvatar(){
+		// 	this.$http.post("/label/getAvatar.do",{
+
+		// 	}).then(function (res) {
+	 //              if(res.data.success){
+	 //              	let data = res.data;
+	 //              	this.labels = data.list;
+	 //              }
+	 //            }
+	 //        );
+		// },
+
+
+		getUserInfo(){
+			 //将JSON字符串转换成为JSON对象输出
+			var storage=window.localStorage;
+            var json=storage.getItem("teamUp");
+            var jsonObj=JSON.parse(json);
+            this.username = jsonObj.name;
+            this.desc = jsonObj.profile;
+
+            //getAvatar
+            this.$http.post("/user/getAvatar.do",{
+            	id:jsonObj.id
+			}).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.showAvatar = true;
+	              	this.avatar = data.url;
+	              	console.log('data',data);
+	              }
+	            }
+	        );
+		},
+
+		upload: function(e) {
+            e.preventDefault();
+            var file = e.target.files; // 每次只允许上传一张图片，因此只取[0]
+            var name = file[0].name;
+
+		    // 判断图片格式
+		    // if( file.type!='image/png' ){  
+		    //     alert('图片格式不正确');
+		    //     e.target.files.length = 0;
+		    //     $(e.target).val('');
+		    //     return false;  
+		    // }
+
+		    // 使用formData组装数据
+		    var formData = new FormData();
+		    formData.append('file', file[0]); // 文件数据
+		    formData.append('fileName', name); // 其他的一些参数
+            this.$http.post("/user/uploadAvatar.do",formData,{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	Toast('上传图片成功！')
+	              	this.showAvatar = true;
+	              	this.avatar = data.url;
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+            //
+        },
+
+		uploadImg(){
+			console.log('uploadImg')
+		},
+
 		//获得一个用户的所有标签
 		getUserLabel(){
 			this.$http.post("/label/getUserLabel.do").then(function (res) {
@@ -160,6 +251,7 @@ export default {
 			}
 
 			this.$http.post("/user/modifyProfile.do",{
+				name:this.username,
 				profile:this.desc,
 			},{
 			  emulateJSON: true
