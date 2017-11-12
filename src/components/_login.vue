@@ -58,6 +58,9 @@
 	color: #000;
 	text-decoration: none;
 }
+input{
+	user-select:auto; 
+}
 
 
 </style>
@@ -78,7 +81,6 @@
 			<span><a href="#">微信登录</a></span>
 			<span class='register'>还没有账号<a href="/register">去注册</a></span>
 		</label>
-
 	</div>
 </template>
 <script>
