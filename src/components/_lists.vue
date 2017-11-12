@@ -135,10 +135,9 @@
 	    </header-vue>
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="song-cotainer" ref="scrollTarget">
-	    	<!--  <p @click="getProjectLists()">xxxx</p> -->
     			<mt-navbar :value="selected" @input="function(val) {selected = val}" >
-				  <mt-tab-item id="1" class='mint-tab-item-left' @click.native="getProjectLists()">有趣项目01</mt-tab-item>
-		  		  <mt-tab-item id="2" class='mint-tab-item-right'>优秀小伙伴</mt-tab-item>
+				  <mt-tab-item id="1" class='mint-tab-item-left' @click.native="getProjectLists()">有趣项目</mt-tab-item>
+		  		  <mt-tab-item id="2" class='mint-tab-item-right' @click.native="getRecommendUserLists()">优秀小伙伴</mt-tab-item>
 				</mt-navbar>
 				<mt-tab-container v-model="selected" ref="scrollTouch" class='items'>
 					<mt-tab-container-item id="1">
@@ -169,28 +168,13 @@
 					<mt-tab-container-item id="2" v-if="selected == 2">
 						<p class="title">找到你感兴趣的小伙伴</p>
 						<ul>
-							<li>
-								<img src="../assets/users.jpg">
+							<li :key="item.id" v-for="item in RecommendUserLists">
+								<img :src="item.avatarUrl ||'/static/users.jpg'">
 								<div>
 									<div class="name">
-										<span>cheeky in china</span>
-										<span class="link">查看他项目</span>
+										<span>{{item.name}}</span>
 									</div>
-									<p class="job">design sprint</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
-									</p>
-								</div>
-							</li>
-							<li>
-								<img src="../assets/users.jpg">
-								<div>
-									<div class="name">
-										<span>cheeky in china</span>
-										<span class="link">查看他项目</span>
-									</div>
-									<p class="job">design sprint</p>
+									<p class="job">{{item.profile||'这个人很懒，还没有简介'}}</p>
 									<p class="label">
 										<span>标签</span>
 										<span>标签</span>
@@ -284,12 +268,31 @@
 		            }
 			    );
 	       },
+
+	       //获得系统推荐的小伙伴
+	       getSystemRecommendUser(){
+	       		this.loaded = false;
+	       		this.RecommendUserLists =	[];
+				this.$http.post("/user/getSystemRecommendUser.do").then(function (res) {
+		              if(res.data.success){
+		              	this.loaded = true;
+		              	this.RecommendUserLists = res.data.list;
+		              }else{
+		              	Toast(res.data.msg)
+		              }
+		            }
+			    );
+	       },
+
 	       // 点击有趣项目切换
 	       getProjectLists(){
 	       	 this.getUserJoinedProject();
 	       },
 
 	       //点击有趣小伙伴切换
+	       getRecommendUserLists(){
+	       		this.getSystemRecommendUser();
+	       },
 
 	       //添加项目
 			LinkAddItem(){
