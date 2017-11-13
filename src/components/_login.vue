@@ -6,8 +6,9 @@
  .logo{
  	width: 115px;
  	height: 60px;
- 	background: red;
  	margin: 0 auto;
+ 	background: url('/static/logo.png') no-repeat center;
+ 	background-size: cover;
  	margin-top: calc(30px);
  	margin-bottom: 16px;
  }
@@ -43,10 +44,6 @@
 	color: #888;
 }
 
-.other{
-
-}
-
 .other span{
 	display: inline-block;
 }
@@ -66,7 +63,7 @@ input{
 </style>
 <template>
 	<div class="page">
-		<p class="logo">logo</p>
+		<p class="logo"></p>
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">邮箱</label>
 			<input type="text"  v-model.trim="email" @blur="blur(email,'email')" class="mint-field-core">
@@ -111,8 +108,6 @@ input{
 					return false;
 				}
 				
-				//登录
-				
 				this.$http.post("/user/signin.do",{
 					email:this.email,
 					password:this.password,
@@ -145,12 +140,6 @@ input{
 		            }
 		        );
 		       
-
-		      
-		       
-		       
-
-		        
 		        //获得一个标签下的项目 debug
 				if(false){
 					this.$http.post("/project/getProjectInLabel.do",{
