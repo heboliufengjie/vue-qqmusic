@@ -55,20 +55,18 @@
 		img{
 			width:60px;
 			height:60px;
-			display:inline-block;
-			border-radius:50%;
-			margin-right:15px;
+			border:1px solid #EFEFEF;
 		}
 
 		>div{
-			width:100%;
+			margin-left:15px;
 		}
 		
 		.name{
     		display: flex;
 			justify-content: space-between;
 			align-items: center;
-			font-size: 1rem;
+			font-size: 14px;
 			color: #202020;
 			span{
 				display:inline-block;
@@ -182,7 +180,7 @@
 						<p class="title">找到你感兴趣的小伙伴</p>
 						<ul v-show="RecommendUserLists.length && loaded">
 							<li :key="item.id" v-for="item in RecommendUserLists">
-								<img :src="item.avatarUrl ||'/static/users.jpg'">
+								<img :src="item.avatarUrl ||'/static/avatar02.png'">
 								<div>
 									<div class="name">
 										<span>{{item.name}}</span>

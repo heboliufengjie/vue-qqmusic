@@ -119,20 +119,18 @@
 		img{
 			width:60px;
 			height:60px;
-			display:inline-block;
-			border-radius:50%;
-			margin-right:15px;
+			border:1px solid #EFEFEF;
 		}
 
 		>div{
-			width:100%;
+			margin-left:15px;
 		}
 		
 		.name{
     		display: flex;
 			justify-content: space-between;
 			align-items: center;
-			font-size: 1rem;
+			font-size: 14px;
 			color: #202020;
 			span{
 				display:inline-block;
@@ -140,12 +138,12 @@
 			.link{
 				color: #3C96FF;
 				text-decoration:none;
-				font-size:0.3rem;
+				font-size: 12px;
 				margin-left:1rem;
 			}
 		}
 		.job{
-			font-size:0.3rem;
+			font-size: 12px;
 			color: #202020;
 			padding:0.25rem 0;
 		}
@@ -171,7 +169,7 @@
 		    	<img src="/static/avatar_bg.png" class="bg">
 		    	<span class="edit"><a :href="editLink()">编辑</a></span>
 				<div class="upload">
-				 	<img :src="avatar" v-if="showAvatar" class="avatar">
+				 	<img :src="avatar||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
 				</div>
 				<div class="name">{{username}}</div>
 				<div class="desc">{{desc||'这家伙很懒，还没填写简介'}}</div>
@@ -186,7 +184,7 @@
 					<p class="title">Ta创建的项目</p>
 					<ul>
 						<li v-for='item in lists'>
-							<img src="../assets/project.jpg" class="project">
+							<img src="/static/project_bg02.png" class="project">
 							<div>
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
@@ -281,7 +279,7 @@
 			},
 
 			//添加项目
-			
+
 			LinkAddItem(){
 				console.log('LinkAddItem')
 				location.href='/item_add';
