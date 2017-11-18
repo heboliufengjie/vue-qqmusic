@@ -1,5 +1,5 @@
 
-<style lang="sass">
+<style lang="sass" scoped>
 	.song-cotainer, .ranklist-loading {
 		position: absolute;
 		left: 0;
@@ -10,6 +10,8 @@
 		&:before {
 			display: block;
 			content: '';
+			margin-top: 0;
+
 		}
 		.lyrics-wrapper {
 			line-height: 42px;
@@ -98,7 +100,7 @@
 		   
 	}
 	.mint-tab-container {
-		height: calc(100vh - 40px - 40px - 53px);
+		height: calc(100vh - 40px - 53px);
 	}
 	.page .page-content{
 		margin-bottom:40px;
@@ -122,16 +124,27 @@
 	.tip :first-child{
 		border-right:1px solid #fff;
 	}
+
+.project-null{
+	width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 12px;
+	color: #CFCFCF;
+}
+
+.project-null .null{
+	margin: 30% auto 0;
+	width:calc(0.8 * 186px);
+	height:calc(0.8 * 168px);
+	background: url('/static/project_null.png') no-repeat center;
+	background-size: cover;
+	margin-bottom:14px;
+}
 </style>
 <template>
 	<div class="page">
-		<!--  <header-vue fixed 
-					class="music-header-2" 
-					:title="topinfo.ListName + `第${_getDayOfYear(data.update_time)}天`" 
-					:showTitle="showTitle">
-	      <fallback slot="left"></fallback>
-	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </header-vue> -->
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="song-cotainer" ref="scrollTarget">
     			<mt-navbar :value="selected" @input="function(val) {selected = val}" >
@@ -141,9 +154,9 @@
 				<mt-tab-container v-model="selected" ref="scrollTouch" class='items'>
 					<mt-tab-container-item id="1">
 						<p class="title">找到你感兴趣的组</p>
-						<ul>
+						<ul v-show="ProjectLists.length && loaded">
 							<!-- 项目列表 -->
-							<li v-for="(song, index) in ProjectLists" v-show="ProjectLists.length && loaded">
+							<li v-for="(song, index) in ProjectLists">
 								<img src="../assets/project.jpg" class="project">
 								<div>
 									<div class="name">
@@ -157,16 +170,17 @@
 								</div>
 							</li>
 							<!-- ／项目列表 -->
-							<!-- null -->
-							<li v-show="!ProjectLists.length && loaded">
-								<p>你还没有项目</p>
-							</li>
-							<!-- /null -->
 						</ul>
+						<!-- null -->
+						<div class="project-null" v-show="!ProjectLists.length && loaded">
+							<div class="null"></div>
+							<p>还在载入值得投入的项目</p>
+						</div>
+						<!-- /null -->
 					</mt-tab-container-item>
 					<mt-tab-container-item id="2" v-if="selected == 2">
 						<p class="title">找到你感兴趣的小伙伴</p>
-						<ul>
+						<ul v-show="RecommendUserLists.length && loaded">
 							<li :key="item.id" v-for="item in RecommendUserLists">
 								<img :src="item.avatarUrl ||'/static/users.jpg'">
 								<div>
@@ -181,6 +195,12 @@
 								</div>
 							</li>
 						</ul>
+						<!-- null -->
+						<div class="project-null" v-show="!RecommendUserLists.length && loaded">
+							<div class="null"></div>
+							<p>还未载入有趣的小伙伴</p>
+						</div>
+						<!-- /null -->
 					</mt-tab-container-item>
 				</mt-tab-container>
 	    	</div>
