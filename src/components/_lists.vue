@@ -55,7 +55,7 @@
 		img{
 			width:60px;
 			height:60px;
-			border:1px solid #EFEFEF;
+			border-radius:50%;
 		}
 
 		>div{

@@ -39,6 +39,12 @@
 	background: #EFEFEF;
 	border-radius: 64.8px;
 }
+
+.project-labels p{
+    font-size: 12px;
+    color: #ccc;
+}
+
 .project-number{
  	display: flex;
 	display: -webkit-flex; /* Safari */
@@ -49,13 +55,19 @@
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
-	background-color: #ccc;
+}
+.project-number img{
+	width: 100%;
 }
 .project-number span{
 	margin-left: 6px;
 }
 .project-pic{
+	display: inline-block;
 	margin-top: 20px;
+}
+.project-pic img{
+	width: 100%;
 }
 </style>
 <template>
@@ -73,19 +85,21 @@
 		   <!-- labels -->
 		   <div class="project-labels">
 				<a href="javascript:;" v-for="label in labels" v-if="labels.length">{{label.name}}</a>
-				<a v-if="!labels.length">暂时没有关联标签，请添加标签</a>
+				<p v-if="!labels.length">暂时没有关联标签，请添加标签</p>
 			</div>
 			<!-- /labels -->
 			<!-- project-number -->
 			<div class="project-number">
-			  <a href="" v-for="item in projectNumbers">
-			  	<img src="#">
+			  <a href="javascript:;" v-for="(item,index) in projectNumbers">
+			  	<img :src="(item.avatarUrl||'/static/avatar01.png')">
 			  </a>
-			  <span>+10</span>
+			  <span v-if="(projectNumbers.length>10)" >+10</span>
 			</div>
 		   <!-- /project-number -->
 		   <!-- project img -->
-		   <div class="project-pic">这里是项目图片</div>
+		   <div class="project-pic">
+		   		<img src="/static/project_bg.png">
+		   </div>
 		   <!-- /project img -->
 		</div>
 	</div>

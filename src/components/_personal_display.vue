@@ -184,7 +184,7 @@
 					<p class="title">Ta创建的项目</p>
 					<ul>
 						<li v-for='item in lists'>
-							<img src="/static/project_bg02.png" class="project">
+							<img src="/static/project_bg02.png" class="project" @click="getProjectInfo(item)">
 							<div>
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
@@ -271,6 +271,13 @@
 		            }
 		        );
 			},
+
+			//getProjectInfo
+			getProjectInfo(data){
+				//console.log('data',data.id)
+				location.href='/item_detail/'+data.id;
+			},
+
 
 			//editLink
 

@@ -2,22 +2,33 @@
  .page{
  	background-color: #fff;
  }
+
+ .header-inner {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
  .inner-page{
  	padding: 0 15px;
  }
  .header{
- 	width: 100%;
- 	height: 125px;
- 	background:#ccc;
- 	margin-bottom: 16px;
+ 	position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 14px 12px;
  }
+ .header .bg{
+	width:100%;
+	height:120px;
+	background-color:#ccc;
+}
  .upload{
-	padding-top: 28px;
-	margin:0 auto;
-	width: 65px;
-	font-size: 12px;
-	text-align: center;
-	color: #fff;
+	position: relative;
+    top: calc(65px / 2 * -1);
+    margin: 0 auto;
+    width: 65px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
 }
 .palette{
 	background-color: rgb(38, 162, 255);
@@ -95,20 +106,25 @@
 </style>
 <template>
 	<div class="page">
+		<!-- header -->
 		<div class="header">
-			<div class="upload">
-				<label v-on:change="upload">
-			 		<img :src="avatar" v-if="showAvatar" class="avatar">
-			 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
-			 	</label>	
-			 	<label v-on:change="upload">
-			 	<div class="palette" v-if="!showAvatar" >+
-			 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
-			 	</div>
-			 	</label>	
-				<p>上传头像</p>
-			</div>
+				<div class="header-inner">
+					<img src="/static/avatar_bg.png" class="bg">
+					<div class="upload">
+						<label v-on:change="upload">
+					 		<img :src="avatar" v-if="showAvatar" class="avatar">
+					 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
+					 	</label>	
+					 	<label v-on:change="upload">
+					 	<div class="palette" v-if="!showAvatar" >+
+					 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
+					 	</div>
+					 	</label>	
+						<p>上传头像</p>
+					</div>
+				</div>
 		</div>
+		<!-- /header -->
 		<div class="inner-page">
 			<div class="mint-checklist label-lists">
 				<ul class="wrapper-project-label">
@@ -189,7 +205,7 @@ export default {
 	              	let data = res.data;
 	              	this.showAvatar = true;
 	              	this.avatar = data.url;
-	              	console.log('data',data);
+	              	//console.log('data',data);
 	              }
 	            }
 	        );
@@ -257,6 +273,12 @@ export default {
 			  emulateJSON: true
 			}).then(function (res) {
 	              if(res.data.success){
+	              	var storage=window.localStorage;
+            		var json=storage.getItem("teamUp");
+            		var jsonObj=JSON.parse(json);
+            		jsonObj.name = this.username;
+	              	var d=JSON.stringify(jsonObj);
+	              	storage.setItem("teamUp",d);
 	              	Toast('修改成功')
 	              }else{
 	              	Toast(res.data.msg)
