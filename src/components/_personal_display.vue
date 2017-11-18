@@ -1,7 +1,6 @@
 <style lang="sass">
 .page{
 	background-color:#fff;
-	height:100vh;
 	overflow:auto;
 }
 .tip{
@@ -106,7 +105,7 @@
 		margin-top:5px;
 	}
 	.items ul{
-		padding: 5px 0px 0px;
+		padding: 5px 0px 40px;
 	}
 	.items ul li{
 		display:flex;
@@ -149,7 +148,7 @@
 		}
 
 		.label{
-			font-size:0.2rem;
+			font-size:12px;
 			color: #202020;
 			span{
 				border: 1px solid #8AC0FF;

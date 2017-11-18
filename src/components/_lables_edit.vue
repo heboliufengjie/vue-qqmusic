@@ -29,6 +29,9 @@
 	border-radius: 0px; 
 	border-bottom: 1px solid #26a2ff; 
 }
+input,textarea{
+	user-select:auto; 
+}
 </style>
 <template>
 	<div class="page">

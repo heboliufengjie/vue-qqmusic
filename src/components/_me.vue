@@ -102,6 +102,9 @@
 	border-radius: 50%;
 	overflow: hidden;
 }
+input,textarea{
+	user-select:auto; 
+}
 
 </style>
 <template>

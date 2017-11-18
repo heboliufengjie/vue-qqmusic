@@ -103,7 +103,7 @@ input,textarea{
 					 		更改上传
 					</label>	
 				</div>
-				<img :src="fileUrl">
+				<img :src="fileUrl" v-show="fileUrl">
 			</div>
 			<div class="title">项目资料</div>
 			<div class="mint-checklist project_name">
@@ -179,12 +179,18 @@ export default {
 	              	let list = data.list;
 	              	if(list.length){
 	              		return list[list.length -1];
+	              	}else{
+	              		return {};
 	              	}
 	              }
 	            }
 	        ).then(function(res){
 	        	//获取上传图片信息
-	        	
+	        	if(!res.fileId){
+	        		this.fileUrl = '/static/project_bg.png';
+	        		return false;
+	        	}
+
 	        	this.$http.post("/file/getFileUrl.do",{
 					fileId:res.fileId,
 				},{
@@ -194,6 +200,8 @@ export default {
 		              if(res.data.success){
 		              	let data = res.data;
 		              	this.fileUrl = data.url||'/static/project_bg.png';
+		              }else{
+		              	this.fileUrl = '/static/project_bg.png';
 		              }
 		            }
 		        );
