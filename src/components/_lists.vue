@@ -10,7 +10,6 @@
 		&:before {
 			display: block;
 			content: '';
-			margin-top: 40px;
 		}
 		.lyrics-wrapper {
 			line-height: 42px;
@@ -80,13 +79,13 @@
 			}
 		}
 		.job{
-			font-size:0.3rem;
+			font-size:12px;
 			color: #202020;
 			padding:0.25rem 0;
 		}
 
 		.label{
-			font-size:0.2rem;
+			font-size:12px;
 			color: #202020;
 			span{
 				border: 1px solid #8AC0FF;
@@ -126,13 +125,13 @@
 </style>
 <template>
 	<div class="page">
-		<header-vue fixed 
+		<!--  <header-vue fixed 
 					class="music-header-2" 
 					:title="topinfo.ListName + `第${_getDayOfYear(data.update_time)}天`" 
 					:showTitle="showTitle">
 	      <fallback slot="left"></fallback>
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </header-vue>
+	    </header-vue> -->
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="song-cotainer" ref="scrollTarget">
     			<mt-navbar :value="selected" @input="function(val) {selected = val}" >
