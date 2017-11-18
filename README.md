@@ -80,7 +80,8 @@ https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 
 
 ——————————————————
-
+	
+	//添加项目
 	LinkAddItem(){
 		console.log('LinkAddItem')
 		location.href='/item_add';

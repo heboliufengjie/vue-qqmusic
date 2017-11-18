@@ -28,8 +28,7 @@
 	position:relative;
  	width: 100%;
  	margin-bottom: 16px;
- 	margin-top:50px;
- 	padding:0 12px;
+ 	padding:14px 12px;
 }
 .header-inner{
  	border:1px solid #ccc;
@@ -167,19 +166,15 @@
 </style>
 <template>
 	<div class="page">
-		<header-vue fixed class="music-header-2">
-	      <fallback slot="left"></fallback>
-	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </header-vue>
 	    <div class="header">
 	    	<div class="header-inner">
-		    	<img src="" class="bg">
+		    	<img src="/static/avatar_bg.png" class="bg">
 		    	<span class="edit"><a :href="editLink()">编辑</a></span>
 				<div class="upload">
-				 	<img src="" v-if="!false">
+				 	<img :src="avatar" v-if="showAvatar" class="avatar">
 				</div>
-				<div class="name">Jessie Smith</div>
-				<div class="desc">I wasn't the girl who played dress up and dreamt of a pink Barbie car.</div>
+				<div class="name">{{username}}</div>
+				<div class="desc">{{desc||'这家伙很懒，还没填写简介'}}</div>
 				<div class="label-lists">
 					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
 				</div>
@@ -213,12 +208,15 @@
 </template>
 	
 <script>
-	import fallback from './fallback.vue';
-	import { apiHandler } from '@/api/index';
+	// import fallback from './fallback.vue';
+	// import { apiHandler } from '@/api/index';
 	export default {
 		name: 'personal_display',
 		data() {
 			return {
+				showAvatar:false,
+				avatar:'',
+				username:'',
 				desc:'',
 				labels:[],
 				lists:[],
@@ -255,12 +253,44 @@
 		              }
 		            }
 		        );
+
+		         //将JSON字符串转换成为JSON对象输出
+				var storage=window.localStorage;
+	            var json=storage.getItem("teamUp");
+	            var jsonObj=JSON.parse(json);
+	            this.username = jsonObj.name;
+	            this.desc = jsonObj.profile;
+
+	            //getAvatar
+	            this.$http.post("/user/getAvatar.do",{
+	            	id:jsonObj.id
+				}).then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+		              	this.showAvatar = true;
+		              	this.avatar = data.url;
+		              }
+		            }
+		        );
 			},
 
 			//editLink
 
 			editLink(){
 				return '/me';
+			},
+
+			//添加项目
+			
+			LinkAddItem(){
+				console.log('LinkAddItem')
+				location.href='/item_add';
+			},
+
+			//个人展示
+
+			LinkPersonalDisplay(){
+				location.href='/personal_display';
 			},
 
 		}
