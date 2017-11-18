@@ -164,41 +164,7 @@ input{
 			        );
 		        }
 
-		        //创建标签
-				if(false){
-					this.$http.post("/label/createLabel.do",{
-						name:'my forth label',
-						isPublic:0,
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
-		        //删除标签
-				if(false){
-					this.$http.post("/label/deleteLabel.do",{
-						id:4,
-					},{
-					  emulateJSON: true
-					}
-					).then(function (res) {
-			              if(res.data.success){
-			              	console.log('创建项目')
-			              	//Toast('修改成功')
-			              }else{
-			              	Toast(res.data.msg)
-			              }
-			            }
-			        );
-		        }
+		       
 		         //获得标签信息
 				if(false){
 					this.$http.post("/label/getLableInfo.do",{

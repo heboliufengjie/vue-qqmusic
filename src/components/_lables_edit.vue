@@ -41,21 +41,18 @@ input,textarea{
 					<i class="mintui mintui-search"></i>
 					<input type="search" placeholder="输入你想表达的短句" v-model.trim="value" v-on:keyup.enter="submit(value)" @focus='focus' class="mint-searchbar-core">
 				</div>
-				<a class="mint-searchbar-cancel" v-show='showCancel'>取消</a>
+				<a class="mint-searchbar-cancel" v-show='showCancel' @click="CancelAddLabel">取消</a>
 			</div>
-			<!-- <div class="mint-search-list" style="">
-				<div class="mint-search-list-warp"></div>
-			</div> -->
 		</div>
 		<div class="inner-page">
 			<div class="label-lists">
-				<a @click="addLabelForProject(label)" :key="label.id" v-for="label in labels">{{label.name}}</a>
+				<a @click="deleteLabel(label)" :key="label.id" v-for="label in labels">{{label.name}}</a>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-import { Toast } from 'mint-ui';
+import { Toast,MessageBox} from 'mint-ui';
 export default {
 	name: 'lables_edit',
 	data() {
@@ -70,6 +67,12 @@ export default {
 	},
 
 	methods:{
+		//CancelAddLabel
+
+		CancelAddLabel(){
+			this.value ='';
+		},
+
 		//获得一个用户的所有标签
 		getUserLabel(){
 			this.$http.post("/label/getUserLabel.do").then(function (res) {
@@ -80,6 +83,30 @@ export default {
 	            }
 	        );
 		},
+
+		//删除标签
+		deleteLabel(data){
+			MessageBox.confirm('确定删除此标签?').then(action => {
+			  	if(action ==='confirm'){
+			  		//
+			  		this.$http.post("/label/deleteLabel.do",{
+						id:data.id,
+					},{
+					  emulateJSON: true
+					}
+					).then(function (res) {
+			              if(res.data.success){
+			              	console.log('删除标签成功')
+			              	this.getUserLabel();
+			              }else{
+			              	Toast(res.data.msg)
+			              }
+			            }
+			        );
+			        //
+			  	}
+			});
+        },
 
 		//为一个项目添加标签
 		addLabelForProject(data){
@@ -102,12 +129,28 @@ export default {
 		focus(){
 			this.showCancel = 1;
 		},
+
+		//创建标签
 		submit(data){
-			alert(12)
 			if(!data){
 				return false;
 			}else{
-				console.log('submit',data)
+			
+				this.$http.post("/label/createLabel.do",{
+					name:data,
+					isPublic:0,
+				},{
+				  emulateJSON: true
+				}
+				).then(function (res) {
+		              if(res.data.success){
+		              	console.log('创建项目')
+		              	//Toast('修改成功')
+		              }else{
+		              	Toast(res.data.msg)
+		              }
+		            }
+		        );
 			}
 		},
 	},
