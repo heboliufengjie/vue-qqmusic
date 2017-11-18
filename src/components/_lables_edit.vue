@@ -135,7 +135,7 @@ export default {
 			if(!data){
 				return false;
 			}else{
-			
+				alert('创建项目');
 				this.$http.post("/label/createLabel.do",{
 					name:data,
 					isPublic:0,
