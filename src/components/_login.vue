@@ -43,7 +43,10 @@
 	text-decoration: none;
 	color: #888;
 }
-
+.other{
+	margin-top: 18px;
+	margin-right: 0;
+}
 .other span{
 	display: inline-block;
 }
@@ -54,6 +57,9 @@
 .other a{
 	color: #000;
 	text-decoration: none;
+}
+a.logon_wx{
+	color: #54a037;
 }
 input{
 	user-select:auto; 
@@ -75,7 +81,7 @@ input{
 		</div>
 		<mt-button size="large" class="mint-button--primary" @click="submit()">登录</mt-button>
 		<label class="mint-checklist-title other">
-			<span><a href="#">微信登录</a></span>
+			<span><a href="#" class="logon_wx">微信登录</a></span>
 			<span class='register'>还没有账号<a href="/register">去注册</a></span>
 		</label>
 	</div>

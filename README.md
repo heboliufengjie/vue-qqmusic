@@ -79,3 +79,17 @@ http://116.62.17.193/project/createProject.do
 https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 
 
+——————————————————
+
+	LinkAddItem(){
+		console.log('LinkAddItem')
+		location.href='/item_add';
+	},
+
+	//个人展示
+
+	LinkPersonalDisplay(){
+		location.href='/personal_display';
+	},
+
+

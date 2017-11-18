@@ -313,10 +313,17 @@
 	       		this.getSystemRecommendUser();
 	       },
 
-	       //添加项目
+	       	//添加项目
+	       	
 			LinkAddItem(){
 				console.log('LinkAddItem')
 				location.href='/item_add';
+			},
+
+			//个人展示
+
+			LinkPersonalDisplay(){
+				location.href='/personal_display';
 			},
 
 			_initScroll() {
@@ -372,7 +379,6 @@
 			...mapActions(NameSpace, ['playSong']),
 			
 			LinkPersonalDisplay(){
-				console.log('LinkPersonalDisplay')
 				location.href='/personal_display';
 			}
 		},

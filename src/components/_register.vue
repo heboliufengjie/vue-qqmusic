@@ -6,8 +6,9 @@
  .logo{
  	width: 115px;
  	height: 60px;
- 	background: red;
  	margin: 0 auto;
+ 	background: url('/static/logo.png') no-repeat center;
+ 	background-size: cover;
  	margin-top: calc(30px);
  	margin-bottom: 16px;
  }
@@ -29,6 +30,10 @@
     margin-top: 30px;
 }
 
+.other{
+	margin-right: 0;
+	margin-top: 16px;
+}
 .other span{
 	display: inline-block;
 }
@@ -40,7 +45,7 @@
 </style>
 <template>
 	<div class="page">
-		<p class="logo">register</p>
+		<div class="logo"></div>
 		<!-- <div class="mint-checklist">
 			<label class="mint-checklist-title">用户名</label>
 			<input type="text"  v-model.trim="username" @blur="blur(username,'username')" class="mint-field-core">
@@ -55,7 +60,7 @@
 		</div>
 		<mt-button size="large" class="mint-button--primary" @click="submit()">注册</mt-button>
 		<label class="mint-checklist-title other">
-			<span class='register'>已有账号<a href="/">登录</a></span>
+			<span class='register'>已有账号? <a href="/">登录</a></span>
 		</label>
 
 	</div>
