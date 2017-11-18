@@ -3,7 +3,13 @@
  	background-color: #fff;
  }
  .inner-page{
- 	padding: 0 15px;
+ 	padding: 16px 15px;
+ }
+ .project_bg{
+
+ }
+ .project_bg img{
+ 	width: 100%;
  }
  .header{
  	position: relative;
@@ -28,9 +34,14 @@
 	color: #000;
 	height: 38px;
 	line-height: 38px;
-	background-color: #ccc;
+	background-color: #f8f8f8;
+	margin-top: 12px;
+	padding-left: 14px;
 }
-.label-lists{}
+.project_name,.project_desc,.label-lists{
+	margin-top: 14px;
+}
+
 .label-lists a{
 	display: inline-block;
 	color: #000;
@@ -41,6 +52,13 @@
 	margin-right: 5px;
 	margin-bottom: 5px;
 	text-decoration: none;
+}
+.labels_null{
+	text-align: center;
+	font-size: 12px;
+	color: #ccc;
+	padding: 20px;
+
 }
 .mint-checklist{
 	border-bottom: 1px solid #ccc;
@@ -63,41 +81,45 @@
 	justify-content: space-between;
 	color: #000;
 	font-size: 14px;
-	padding-top: 20px;
-	padding-bottom: 10px;
 }
 .wrapper-project-label a{
 	text-decoration: none;
 	font-size: 12px;
 	color: #3C96FF;
 }
+.project-label-edit{
+	color: #63acf7;
+}
+
+input,textarea{
+	user-select:auto; 
+}
 
 </style>
 <template>
 	<div class="page">
-		<div class="header">
-			<img src="" v-if="false">	
-			<div class="upload">更改上传01</div>
-		</div>
+		<!-- <div class="header">
+			<img src="/static/project_bg.png">	
+			<div class="upload">更改上传</div>
+		</div> -->
 		<div class="inner-page">
+			<div class="project_bg">
+				<img src="/static/project_bg.png">
+			</div>
 			<div class="title">项目资料</div>
-			<div class="mint-checklist">
+			<div class="mint-checklist project_name">
 				<label class="mint-checklist-title">项目名称</label>
 				<input type="text"  v-model.trim="projectInfo.name"  placeholder="请输入项目名称" class="mint-field-core">
 			</div>
-			<div class="mint-checklist">
+			<div class="mint-checklist project_desc">
 				<label class="mint-checklist-title">项目简介</label>
 				<textarea v-model.trim="projectInfo.profile"  placeholder="请输入项目简介" class="mint-field-core"></textarea>
 			</div>
-			<!-- <div class="mint-checklist label-lists">
-				<label class="mint-checklist-title">项目标签</label>
-				<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
-			</div> -->
 			<div class="mint-checklist label-lists">
 				<!-- <label class="mint-checklist-title">项目标签</label> -->
 				<ul class="wrapper-project-label">
 			   		<li class="project-label">项目标签</li>
-			   		<li @click="editProjectLabelsLink()">编辑</li>
+			   		<li class="project-label-edit" @click="editProjectLabelsLink()">编辑</li>
 			   </ul>
 			   <!-- label -->
 				<div v-if="labels.length">
@@ -105,7 +127,7 @@
 				</div>
 				<!-- /label -->
 				<!-- no label -->
-				<div v-else>
+				<div v-else class="labels_null">
 					没有相关标签,请编辑标签
 				</div>
 				<!-- /no label -->

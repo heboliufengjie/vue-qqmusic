@@ -92,4 +92,9 @@ https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 		location.href='/personal_display';
 	},
 
+	//当前项目并未创立成功，而为该项目添加标签需要传项目id
+	editProjectLabelsLink(){
+		location.href="/lables_edit/"+this.$route.params.id;
+	},
+
 

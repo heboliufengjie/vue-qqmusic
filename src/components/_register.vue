@@ -41,6 +41,10 @@
 	float: right;
 }
 
+input{
+	user-select:auto; 
+}
+
 
 </style>
 <template>
