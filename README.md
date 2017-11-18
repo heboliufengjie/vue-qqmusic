@@ -98,4 +98,10 @@ https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 		location.href="/lables_edit/"+this.$route.params.id;
 	},
 
+________________
+
+1.编辑项目接口；
+2.项目标签
+3.
+
 

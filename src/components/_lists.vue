@@ -42,7 +42,7 @@
 		margin-top:5px;
 	}
 	.items ul{
-		padding: 5px 15px 0px;
+		padding: 5px 13px 0px;
 	}
 	.items ul li{
 		display:flex;
