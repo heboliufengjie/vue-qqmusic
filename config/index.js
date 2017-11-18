@@ -48,6 +48,13 @@ module.exports = {
             pathRewrite: {
               '^/label': ''
             }
+        },
+         '/file': {
+            target: 'http://116.62.17.193/file',
+            changeOrigin: true,
+            pathRewrite: {
+              '^/file': ''
+            }
         }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
