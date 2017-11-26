@@ -186,9 +186,8 @@
 										<span>{{item.name}}</span>
 									</div>
 									<p class="job">{{item.profile||'这个人很懒，还没有简介'}}</p>
-									<p class="label">
-										<span>标签</span>
-										<span>标签</span>
+									<p class="label" v-if="item.labelList.length">
+										<span v-for="label in item.labelList" :key ="label.id">{{label.name}}</span>
 									</p>
 								</div>
 							</li>

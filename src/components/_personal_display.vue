@@ -168,10 +168,10 @@
 		    	<img src="/static/avatar_bg.png" class="bg">
 		    	<span class="edit"><a :href="editLink()">编辑</a></span>
 				<div class="upload">
-				 	<img :src="avatar||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
+				 	<img :src="userInfo.avatarUrl||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
 				</div>
-				<div class="name">{{username}}</div>
-				<div class="desc">{{desc||'这家伙很懒，还没填写简介'}}</div>
+				<div class="name">{{userInfo.name}}</div>
+				<div class="desc">{{userInfo.profile||'这家伙很懒，还没填写简介'}}</div>
 				<div class="label-lists">
 					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
 				</div>
@@ -182,8 +182,8 @@
 				<mt-tab-container-item>
 					<p class="title">Ta创建的项目</p>
 					<ul>
-						<li v-for='item in lists'>
-							<img src="/static/project_bg02.png" class="project" @click="getProjectInfo(item)">
+						<li v-for='item in lists' :key="item.id">
+							<img :src="item.projectImageUrl||'/static/project_bg02.png'" class="project" @click="getProjectInfo(item)">
 							<div>
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
@@ -212,11 +212,9 @@
 		data() {
 			return {
 				showAvatar:false,
-				avatar:'',
-				username:'',
-				desc:'',
 				labels:[],
 				lists:[],
+				userInfo:{},
 			}
 		},
 		components: {
@@ -225,10 +223,33 @@
 			}
 		},
 		created(){
+			this.getUserInfo();
 			this.getUserCreteProject();
 			this.getUserLabel();
 		},
 		methods:{
+
+			//获得用户信息
+
+			getUserInfo(){
+				var storage=window.localStorage;
+	            var json=storage.getItem("teamUp");
+	            var jsonObj=JSON.parse(json);
+
+				this.$http.post("/user/getUserInfo.do",{
+					id:jsonObj.id,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+		              	this.showAvatar=true,
+		              	this.userInfo = data;
+		              }
+		            }
+		        );
+			},
+
 
 			//获得一个用户的所有标签
 			getUserLabel(){
@@ -250,30 +271,10 @@
 		              }
 		            }
 		        );
-
-		         //将JSON字符串转换成为JSON对象输出
-				var storage=window.localStorage;
-	            var json=storage.getItem("teamUp");
-	            var jsonObj=JSON.parse(json);
-	            this.username = jsonObj.name;
-	            this.desc = jsonObj.profile;
-
-	            //getAvatar
-	            this.$http.post("/user/getAvatar.do",{
-	            	id:jsonObj.id
-				}).then(function (res) {
-		              if(res.data.success){
-		              	let data = res.data;
-		              	this.showAvatar = true;
-		              	this.avatar = data.url;
-		              }
-		            }
-		        );
 			},
 
 			//getProjectInfo
 			getProjectInfo(data){
-				//console.log('data',data.id)
 				location.href='/item_detail/'+data.id;
 			},
 
@@ -287,7 +288,6 @@
 			//添加项目
 
 			LinkAddItem(){
-				console.log('LinkAddItem')
 				location.href='/item_add';
 			},
 

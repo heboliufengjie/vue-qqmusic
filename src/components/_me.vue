@@ -115,7 +115,7 @@ input,textarea{
 					<img src="/static/avatar_bg.png" class="bg">
 					<div class="upload">
 						<label v-on:change="upload">
-					 		<img :src="avatar" v-if="showAvatar" class="avatar">
+					 		<img :src="userInfo.avatarUrl" v-if="showAvatar" class="avatar">
 					 		<input ref="files" type="file" name="avatar" id="avatar" style="display:none;">
 					 	</label>	
 					 	<label v-on:change="upload">
@@ -147,18 +147,18 @@ input,textarea{
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">用户名</label>
-				<input type="text"  v-model.trim="username"  placeholder="请输入用户名" class="mint-field-core">
+				<input type="text"  v-model.trim="userInfo.name"  placeholder="请输入用户名" class="mint-field-core">
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">个人简介</label>
-				<textarea v-model.trim="desc"  placeholder="请输入个人简介" class="mint-field-core"></textarea>
+				<textarea v-model.trim="userInfo.profile"  placeholder="请输入个人简介" class="mint-field-core"></textarea>
 			</div>
 			<mt-button size="large" class="mint-button--primary" @click="submit()">确定</mt-button>
 		</div>
 	</div>
 </template>
 <script>
-import { Toast } from 'mint-ui';
+import { Toast , MessageBox} from 'mint-ui';
 export default {
 	name: 'me',
 	data() {
@@ -169,50 +169,34 @@ export default {
 			avatar:'',
 			labels:[],
 			projectInfo:{},
+			userInfo:{},
 		}
 	},
 
 	created(){
 		this.getUserLabel();
 		this.getUserInfo();
-		//this.getAvatar();
 	},
 	methods:{
-		//getAvatar
-		// getAvatar(){
-		// 	this.$http.post("/label/getAvatar.do",{
 
-		// 	}).then(function (res) {
-	 //              if(res.data.success){
-	 //              	let data = res.data;
-	 //              	this.labels = data.list;
-	 //              }
-	 //            }
-	 //        );
-		// },
+			getUserInfo(){
+				var storage=window.localStorage;
+	            var json=storage.getItem("teamUp");
+	            var jsonObj=JSON.parse(json);
 
-
-		getUserInfo(){
-			 //将JSON字符串转换成为JSON对象输出
-			var storage=window.localStorage;
-            var json=storage.getItem("teamUp");
-            var jsonObj=JSON.parse(json);
-            this.username = jsonObj.name;
-            this.desc = jsonObj.profile;
-
-            //getAvatar
-            this.$http.post("/user/getAvatar.do",{
-            	id:jsonObj.id
-			}).then(function (res) {
-	              if(res.data.success){
-	              	let data = res.data;
-	              	this.showAvatar = true;
-	              	this.avatar = data.url;
-	              	//console.log('data',data);
-	              }
-	            }
-	        );
-		},
+				this.$http.post("/user/getUserInfo.do",{
+					id:jsonObj.id,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+		              if(res.data.success){
+		              	let data = res.data;
+		              	this.showAvatar=true,
+		              	this.userInfo = data;
+		              }
+		            }
+		        );
+			},
 
 		upload: function(e) {
             e.preventDefault();
@@ -238,7 +222,7 @@ export default {
 	              	let data = res.data;
 	              	Toast('上传图片成功！')
 	              	this.showAvatar = true;
-	              	this.avatar = data.url;
+	              	this.userInfo.avatarUrl = data.url;
 	              }else{
 	              	Toast(res.data.msg)
 	              }
@@ -264,14 +248,14 @@ export default {
 
 		//修改用户简介
 		submit(){
-			if(!this.desc){
+			if(!this.userInfo.profile){
 				Toast('个人简介不能为空！');
 				return false;
 			}
 
 			this.$http.post("/user/modifyProfile.do",{
-				name:this.username,
-				profile:this.desc,
+				name:this.userInfo.name,
+				profile:this.userInfo.profile,
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
@@ -291,9 +275,8 @@ export default {
 		},
 
 		//editProjectLabelsLink
-		//当前项目并未创立成功，而为该项目添加标签需要传项目id
 		editProjectLabelsLink(){
-			location.href="/lables_edit/"+this.$route.params.id;
+			
 		},
 	},
 };

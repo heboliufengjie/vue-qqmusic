@@ -104,4 +104,15 @@ ________________
 2.项目标签
 3.
 
+________
+
+{
+	"avatarUrl":"http://weteamup.oss-cn-hangzhou.aliyuncs.com/avatar/5.jpg?Expires=1511669502&OSSAccessKeyId=LTAIJj640qt6b57p&Signature=gvHp1S6jkPmFDsg5SHDWAGvyGBs%3D",
+	"success":true,
+	"profile":"我是简介",
+	"name":"刘凤杰",
+	"id":5,
+	"email":"375892795@qq.com"
+}
+
 
