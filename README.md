@@ -58,6 +58,10 @@ http://localhost:8080/personal_display
 
 http://localhost:8080/me
 
+9.系统推荐小伙伴的详情
+
+http://localhost:8081/systemRecommendUser/1
+
 
 
 lables_edit
@@ -105,14 +109,5 @@ ________________
 3.
 
 ________
-
-{
-	"avatarUrl":"http://weteamup.oss-cn-hangzhou.aliyuncs.com/avatar/5.jpg?Expires=1511669502&OSSAccessKeyId=LTAIJj640qt6b57p&Signature=gvHp1S6jkPmFDsg5SHDWAGvyGBs%3D",
-	"success":true,
-	"profile":"我是简介",
-	"name":"刘凤杰",
-	"id":5,
-	"email":"375892795@qq.com"
-}
-
+"http://weteamup.oss-cn-hangzhou.aliyuncs.com/avatar/2.jpg?Expires=1511678384&OSSAccessKeyId=LTAIJj640qt6b57p&Signature=gvudKPRC4Oy1%2Biqc5RFmVmnFC7Y%3D"
 

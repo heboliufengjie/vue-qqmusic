@@ -132,10 +132,10 @@ input,textarea{
 				</div>
 				<!-- /no label -->
 			</div>
-			<!-- <div class="mint-checklist">
+			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
-				<textarea v-model.trim="projectDetailDesc"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
-			</div> -->
+				<textarea v-model.trim="projectInfo.detail"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
+			</div>
 			<mt-button size="large" class="mint-button--primary" @click="createProject()">确定</mt-button>
 		</div>
 	</div>
@@ -188,22 +188,28 @@ export default {
 				return false;
 			}
 			if(!this.projectInfo.profile){
-				Toast('项目描述不能为空！');
+				Toast('项目简介不能为空！');
 				return false;
 			}
 
+			// if(!this.projectInfo.detail){
+			// 	Toast('项目描述不能为空！');
+			// 	return false;
+			// }
+
 			this.$http.post("/project/createProject.do",{
 				name:this.projectInfo.name,//项目名称
-				profile:this.projectInfo.profile,//项目描述
+				profile:this.projectInfo.profile,//项目简介
+				detail:this.projectInfo.detail,//项目描述
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
 	              if(res.data.success){
 	              	Toast('创建成功')
 	              	
-	              	setTimeout(()=>{
-	              		location.href="/item_detail/"+ res.data.projectId;
-	              	},500);
+	              	// setTimeout(()=>{
+	              	// 	location.href="/item_detail/"+ res.data.projectId;
+	              	// },500);
 
 	              }else{
 	              	Toast(res.data.msg)

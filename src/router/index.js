@@ -30,6 +30,14 @@ const router = new Router({
         require(['@/components/_password_find'], resolve);
       }
     },
+    //getSystemRecommendUser
+    {
+      path: '/systemRecommendUser/:id',
+      name: 'systemRecommendUser',
+      component(resolve) {
+        require(['@/components/_systemRecommendUser'], resolve);
+      }
+    },
     {
       path: '/me',
       name: 'me',

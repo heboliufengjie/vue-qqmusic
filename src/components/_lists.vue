@@ -179,7 +179,7 @@
 					<mt-tab-container-item id="2" v-if="selected == 2">
 						<p class="title">找到你感兴趣的小伙伴</p>
 						<ul v-show="RecommendUserLists.length && loaded">
-							<li :key="item.id" v-for="item in RecommendUserLists">
+							<li :key="item.id" v-for="item in RecommendUserLists" @click="LinSystemRecommendUser(item)">
 								<img :src="item.avatarUrl ||'/static/avatar02.png'">
 								<div>
 									<div class="name">
@@ -216,8 +216,8 @@
 </template>
 	
 <script>
-	import fallback from './fallback.vue';
-	import { apiHandler } from '@/api/index';
+	// import fallback from './fallback.vue';
+	// import { apiHandler } from '@/api/index';
 	import AlloyTouch from 'alloytouch';
 	import Transform from 'css3transform';
 	import { lyricsAnalysis, getDayOfYear } from '../util';
@@ -240,6 +240,11 @@
 				loaded:false,
 				ProjectLists:[],
 			};
+		},
+		components: {
+			headerVue(resolve) {
+				require(['./header.vue'], resolve);
+			}
 		},
 		created() {
 	        // apiHandler({
@@ -305,10 +310,16 @@
 	       	 this.getUserJoinedProject();
 	       },
 
-	       //点击有趣小伙伴切换
-	       getRecommendUserLists(){
+	        //点击有趣小伙伴切换
+	       	getRecommendUserLists(){
 	       		this.getSystemRecommendUser();
-	       },
+	       	},
+
+	       	//查看系统推荐小伙伴想详情
+
+	       	LinSystemRecommendUser(data){
+	       		location.href='/systemRecommendUser/'+data.id;
+	       	},
 
 	       	//添加项目
 	       	
@@ -323,66 +334,7 @@
 				location.href='/personal_display';
 			},
 
-			_initScroll() {
-				let scrollTouch = this.$refs.scrollTouch.$el,
-					scrollTarget = this.$refs.scrollTarget;
-
-				Transform(scrollTarget, true);
-
-				let self = this;	
-				let alloyTouch = new AlloyTouch({
-					touch: scrollTouch,
-					target: scrollTarget,
-					sensitivity: .8,
-					bindSelf: true,
-					property: 'translateY',
-					max: 0,
-					change(pos) {
-						console.log('pos',pos);
-						let coverHeight = -scrollTouch.clientWidth*.7 + 40;
-						function enableScroll() {
-							this.fixed = scrollTouch.scrollTop > 0 ? true : false;
-						};
-
-						// Toggle The Title When Pos Change
-						self.showTitle = pos <= -60 ? true : false;
-						
-						if (pos <= coverHeight) {
-							// Fiexd The RankList When List Scroll To Top
-							this.target[this.property] = coverHeight;
-
-							// enable tab container scrolled When List Scroll To Top
-							this.preventDefault = false;
-							enableScroll.call(this)
-						}else {
-							this.preventDefault = true;
-						}
-						self._blurringCover(pos/coverHeight);
-					}
-				});
-			},
-			_blurringCover(percentage) {
-				let blur = 30,
-					musicCover = this.$refs.musicCover;
-				//musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
-			},
-			_getDayOfYear: getDayOfYear,
-			randomPlayAll() {
-				this.stackSonglist(this.songlist);
-				this.switchPlayOrder('random');
-				this.playSong('next');
-			},
-			...mapMutations(NameSpace, ['switchPlayOrder', 'stackSonglist']),
-			...mapActions(NameSpace, ['playSong']),
-			
-			LinkPersonalDisplay(){
-				location.href='/personal_display';
-			}
 		},
-		components: {
-			headerVue(resolve) {
-				require(['./header.vue'], resolve);
-			}
-		}
+		
 	}
 </script>

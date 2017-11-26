@@ -135,11 +135,11 @@ input,textarea{
 				</div>
 				<!-- /no label -->
 			</div>
-			<!-- <div class="mint-checklist">
+			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
-				<textarea v-model.trim="projectDetailDesc"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
-			</div> -->
-			<mt-button size="large" class="mint-button--primary" @click="createProject()">确定</mt-button>
+				<textarea v-model.trim="projectInfo.de"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
+			</div>
+			<mt-button size="large" class="mint-button--primary" @click="editProject()">确定</mt-button>
 		</div>
 	</div>
 </template>
@@ -160,54 +160,54 @@ export default {
 	},
 	created(){
 		this.getProjectInfo();
-		this.getProjectLabel();
-		this.getProjectFile();
+		//this.getProjectLabel();
+		//this.getProjectFile();
 	},
 	methods:{
 
 		//getProjectFile
 
-		getProjectFile(){
-			this.$http.post("/file/getProjectFile.do",{
-				projectId:this.$route.params.id
-			},{
-			  emulateJSON: true
-			}
-			).then(function (res) {
-	              if(res.data.success){
-	              	let data = res.data;
-	              	let list = data.list;
-	              	if(list.length){
-	              		return list[list.length -1];
-	              	}else{
-	              		return {};
-	              	}
-	              }
-	            }
-	        ).then(function(res){
-	        	//获取上传图片信息
-	        	if(!res.fileId){
-	        		this.fileUrl = '/static/project_bg.png';
-	        		return false;
-	        	}
+		// getProjectFile(){
+		// 	this.$http.post("/file/getProjectFile.do",{
+		// 		projectId:this.$route.params.id
+		// 	},{
+		// 	  emulateJSON: true
+		// 	}
+		// 	).then(function (res) {
+	 //              if(res.data.success){
+	 //              	let data = res.data;
+	 //              	let list = data.list;
+	 //              	if(list.length){
+	 //              		return list[list.length -1];
+	 //              	}else{
+	 //              		return {};
+	 //              	}
+	 //              }
+	 //            }
+	 //        ).then(function(res){
+	 //        	//获取上传图片信息
+	 //        	if(!res.fileId){
+	 //        		this.fileUrl = '/static/project_bg.png';
+	 //        		return false;
+	 //        	}
 
-	        	this.$http.post("/file/getFileUrl.do",{
-					fileId:res.fileId,
-				},{
-				  emulateJSON: true
-				}
-				).then(function (res) {
-		              if(res.data.success){
-		              	let data = res.data;
-		              	this.fileUrl = data.url||'/static/project_bg.png';
-		              }else{
-		              	this.fileUrl = '/static/project_bg.png';
-		              }
-		            }
-		        );
-		        //
-	        });
-		},
+	 //        	this.$http.post("/file/getFileUrl.do",{
+		// 			fileId:res.fileId,
+		// 		},{
+		// 		  emulateJSON: true
+		// 		}
+		// 		).then(function (res) {
+		//               if(res.data.success){
+		//               	let data = res.data;
+		//               	this.fileUrl = data.url||'/static/project_bg.png';
+		//               }else{
+		//               	this.fileUrl = '/static/project_bg.png';
+		//               }
+		//             }
+		//         );
+		//         //
+	 //        });
+		// },
 
 		//upload
 		upload: function(e) {
@@ -296,8 +296,11 @@ export default {
 	            }
 	        );
 		},
-		//创建项目
-		createProject(){
+
+		//修改项目
+		editProject(){
+			console.log('xxx',this.projectInfo)
+			 return false;
 			if(!this.projectInfo.name){
 				Toast('项目名称不能为空！');
 				return false;

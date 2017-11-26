@@ -166,7 +166,6 @@
 	    <div class="header">
 	    	<div class="header-inner">
 		    	<img src="/static/avatar_bg.png" class="bg">
-		    	<span class="edit"><a :href="editLink()">编辑</a></span>
 				<div class="upload">
 				 	<img :src="userInfo.avatarUrl||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
 				</div>
@@ -177,7 +176,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="item-lists">
+		<!-- <div class="item-lists">
 			<mt-tab-container class='items'>
 				<mt-tab-container-item>
 					<p class="title">Ta创建的项目</p>
@@ -196,7 +195,7 @@
 					</ul>
 				</mt-tab-container-item>
 			</mt-tab-container>
-		</div>
+		</div> -->
     	<div class="tip">
     		<span @click='LinkAddItem()'>添加项目</span>
     		<span @click='LinkPersonalDisplay()'>个人展示</span>
@@ -208,7 +207,7 @@
 	// import fallback from './fallback.vue';
 	// import { apiHandler } from '@/api/index';
 	export default {
-		name: 'personal_display',
+		name: 'systemRecommendUser',
 		data() {
 			return {
 				showAvatar:false,
@@ -217,27 +216,23 @@
 				userInfo:{},
 			}
 		},
-		components: {
-			headerVue(resolve) {
-				require(['./header.vue'], resolve);
-			}
-		},
+		// components: {
+		// 	headerVue(resolve) {
+		// 		require(['./header.vue'], resolve);
+		// 	}
+		// },
 		created(){
 			this.getUserInfo();
-			this.getUserCreteProject();
+			//this.getUserCreteProject();
 			this.getUserLabel();
 		},
 		methods:{
 
 			//获得用户信息
-			
-			getUserInfo(){
-				var storage=window.localStorage;
-	            var json=storage.getItem("teamUp");
-	            var jsonObj=JSON.parse(json);
 
+			getUserInfo(){
 				this.$http.post("/user/getUserInfo.do",{
-					id:jsonObj.id,
+					id:this.$route.params.id,
 				},{
 				  emulateJSON: true
 				}).then(function (res) {
@@ -253,7 +248,11 @@
 
 			//获得一个用户的所有标签
 			getUserLabel(){
-				this.$http.post("/label/getUserLabel.do").then(function (res) {
+				this.$http.post("/label/getUserLabel.do",{
+					id:this.$route.params.id*1,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
 		              if(res.data.success){
 		              	let data = res.data;
 		              	this.labels = data.list;
