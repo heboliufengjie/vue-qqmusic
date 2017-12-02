@@ -120,6 +120,19 @@ input{
 				},{
 				  emulateJSON: true
 				}).then(function (res) {
+				// this.$http({
+		  //           url: "/user/signin.do",
+		  //           method: 'POST',
+		  //           // 请求体重发送的数据
+		  //           params: {
+		  //               email:this.email,
+		  //               password:this.password,
+		  //           },
+		  //           // 设置请求头
+		  //           // headers: {
+		  //           //     'Content-Type': 'x-www-from-urlencoded'
+		  //           // }
+		  //       }).then(function () {
 		              if(res.data.success){
 		              	let data = res.data;
 

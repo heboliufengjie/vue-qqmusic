@@ -187,9 +187,8 @@
 							<div>
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
-								<p class="label">
-									<span>标签</span>
-									<span>标签</span>
+								<p class="label" ng-if="item.labelList.length">
+									<span v-for="label in item.labelList">{{label}}</span>
 								</p>
 							</div>
 						</li>
