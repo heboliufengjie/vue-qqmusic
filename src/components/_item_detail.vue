@@ -55,6 +55,7 @@
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
+	overflow: hidden;
 }
 .project-number img{
 	width: 100%;
@@ -68,6 +69,11 @@
 }
 .project-pic img{
 	width: 100%;
+}
+.project-detail {
+	font-size: 14px;
+	color: #626262;
+	margin-top: 14px;
 }
 </style>
 <template>
@@ -85,12 +91,12 @@
 		   <!-- labels -->
 		   <div class="project-labels">
 				<a href="javascript:;" v-for="label in labels" v-if="labels.length">{{label.name}}</a>
-				<p v-if="!labels.length">暂时没有关联标签，请添加标签</p>
+				<p v-if="!labels.length">暂时没有关联标签</p>
 			</div>
 			<!-- /labels -->
 			<!-- project-number -->
 			<div class="project-number">
-			  <a href="javascript:;" v-for="(item,index) in projectNumbers">
+			  <a :href="LinkToSystemRecommendUser(item)" target="_blank" v-for="(item,index) in projectNumbers" :key="item.id">
 			  	<img :src="(item.avatarUrl||'/static/avatar01.png')">
 			  </a>
 			  <span v-if="(projectNumbers.length>10)" >+10</span>
@@ -101,6 +107,11 @@
 		   		<img src="/static/project_bg.png">
 		   </div>
 		   <!-- /project img -->
+		  <!-- detail -->
+		  <div class="project-detail" v-if="projectInfo.detail">
+		  	{{projectInfo.detail}}
+		  </div>
+		  <!-- /detail -->
 		</div>
 	</div>
 </template>
@@ -151,7 +162,6 @@ export default {
 	              if(res.data.success){
 	              	let data = res.data.list;
 	              	this.projectNumbers = data;
-	              	console.log('获得项目的成员>>>>>',this.projectNumbers);
 	              }else{
 	              	//Toast(res.data.msg)
 	              }
@@ -169,7 +179,6 @@ export default {
 	              if(res.data.success){
 	              	let data = res.data;
 	              	this.projectInfo = data.project;
-	              	console.log('this.projectInfo>>',this.projectInfo);
 	              }else{
 	              	Toast(res.data.msg)
 	              }
@@ -180,6 +189,11 @@ export default {
 		//edit project link
 		editProjectLink(data){
 			return '/item_edit/'+data.id;
+		},
+
+		//LinkToSystemRecommendUser
+		LinkToSystemRecommendUser(data){
+			return '/systemRecommendUser/'+data.id;
 		},
 	},
 };
