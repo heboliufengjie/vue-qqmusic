@@ -103,7 +103,7 @@ input,textarea{
 					 		更改上传
 					</label>	
 				</div>
-				<img :src="fileUrl" v-show="fileUrl">
+				<img :src="projectInfo.projectImageUrl||'/static/project_bg.png'">
 			</div>
 			<div class="title">项目资料</div>
 			<div class="mint-checklist project_name">
@@ -122,7 +122,7 @@ input,textarea{
 			   </ul> -->
 			   <ul class="wrapper-project-label">
 			   		<li class="project-label">项目标签</li>
-			   		<li class="project-label-edit" @click="editProjectLabelsLink()">编辑</li>
+			   		<li class="project-label-edit" @click="editProjectLabels()">编辑</li>
 			   </ul>
 			   <!-- label -->
 				<div v-if="labels.length">
@@ -137,14 +137,14 @@ input,textarea{
 			</div>
 			<div class="mint-checklist">
 				<label class="mint-checklist-title">项目详细描述</label>
-				<textarea v-model.trim="projectInfo.de"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
+				<textarea v-model.trim="projectInfo.detail"  placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
 			</div>
 			<mt-button size="large" class="mint-button--primary" @click="editProject()">确定</mt-button>
 		</div>
 	</div>
 </template>
 <script>
-import { Toast } from 'mint-ui';
+import { Toast ,MessageBox} from 'mint-ui';
 export default {
 	name: 'editProject',
 	data() {
@@ -164,50 +164,6 @@ export default {
 		//this.getProjectFile();
 	},
 	methods:{
-
-		//getProjectFile
-
-		// getProjectFile(){
-		// 	this.$http.post("/file/getProjectFile.do",{
-		// 		projectId:this.$route.params.id
-		// 	},{
-		// 	  emulateJSON: true
-		// 	}
-		// 	).then(function (res) {
-	 //              if(res.data.success){
-	 //              	let data = res.data;
-	 //              	let list = data.list;
-	 //              	if(list.length){
-	 //              		return list[list.length -1];
-	 //              	}else{
-	 //              		return {};
-	 //              	}
-	 //              }
-	 //            }
-	 //        ).then(function(res){
-	 //        	//获取上传图片信息
-	 //        	if(!res.fileId){
-	 //        		this.fileUrl = '/static/project_bg.png';
-	 //        		return false;
-	 //        	}
-
-	 //        	this.$http.post("/file/getFileUrl.do",{
-		// 			fileId:res.fileId,
-		// 		},{
-		// 		  emulateJSON: true
-		// 		}
-		// 		).then(function (res) {
-		//               if(res.data.success){
-		//               	let data = res.data;
-		//               	this.fileUrl = data.url||'/static/project_bg.png';
-		//               }else{
-		//               	this.fileUrl = '/static/project_bg.png';
-		//               }
-		//             }
-		//         );
-		//         //
-	 //        });
-		// },
 
 		//upload
 		upload: function(e) {
@@ -233,38 +189,16 @@ export default {
 			}).then(function (res) {
 	              if(res.data.success){
 	              	let data = res.data;
+	              	this.projectInfo.projectImageUrl = data.url;
 	              	Toast('上传图片成功！')
-	              	//3561638574130250
-	              	// this.showAvatar = true;
-	              	// this.avatar = data.url;
-	              	console.log('data',data)
-	              	return data;
 	              }else{
 	              	Toast(res.data.msg)
 	              }
 	            }
-	        ).then(function(res){
-	        	//获取上传图片信息
-	        	//
-	        	this.$http.post("/file/getFileUrl.do",{
-					fileId:res.fileId,
-				},{
-				  emulateJSON: true
-				}
-				).then(function (res) {
-		              if(res.data.success){
-		              	let data = res.data;
-		              	this.fileUrl = data.url;
-		              }
-		            }
-		        );
-		        //
-	        	console.log('res>>',res)
-	        });
+	        );
             //
         },
 
-        //16389485373482918
 		//get project label
 		getProjectLabel(){
 			this.$http.post("/project/getProjectLabel.do",{
@@ -299,8 +233,6 @@ export default {
 
 		//修改项目
 		editProject(){
-			console.log('xxx',this.projectInfo)
-			 return false;
 			if(!this.projectInfo.name){
 				Toast('项目名称不能为空！');
 				return false;
@@ -310,18 +242,20 @@ export default {
 				return false;
 			}
 
-			this.$http.post("/project/createProject.do",{
+			this.$http.post("/project/modifyProjectInfo.do",{
+				id:this.$route.params.id,
 				name:this.projectInfo.name,//项目名称
 				profile:this.projectInfo.profile,//项目描述
+				detail:this.projectInfo.detail,//项目详情
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
 	              if(res.data.success){
-	              	Toast('创建成功')
+	              	Toast('修改成功')
 	              	//
-	              	 return false;
+	              	//return false;
 	              	setTimeout(()=>{
-	              		location.href="/edit_item/"+ res.data.projectId;
+	              		location.href="/item_edit/"+ this.$route.params.id;
 	              	},500);
 
 	              }else{
@@ -331,15 +265,37 @@ export default {
 	        );
 		},
 
-		//editProjectLabelsLink
+		//editProjectLabels
 
-		editProjectLabelsLink(){
-			location.href="/lables_edit/"+this.$route.params.id;
+		editProjectLabels(){
+			MessageBox.prompt('添加项目标签').then(({ value, action }) => {
+				console.log('value',value)
+				console.log('action',action)
+				 //
+				// this.$http.post("/project/addlabelForProject.do",{
+				// 	id:this.$route.params.id,
+				// 	name:this.projectInfo.name,//项目名称
+				// 	profile:this.projectInfo.profile,//项目描述
+				// 	detail:this.projectInfo.detail,//项目详情
+				// },{
+				//   emulateJSON: true
+				// }).then(function (res) {
+		  //             if(res.data.success){
+		  //             	Toast('修改成功')
+		  //             	//
+		  //             	//return false;
+		  //             	setTimeout(()=>{
+		  //             		location.href="/item_edit/"+ this.$route.params.id;
+		  //             	},500);
+
+		  //             }else{
+		  //             	Toast(res.data.msg)
+		  //             }
+		  //           }
+		  //       );
+				 //
+			});
 		},
-
-		linkEditLables(){
-			location.href="/edit_lables";
-		}
 	},
 };
 </script>
