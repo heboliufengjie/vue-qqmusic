@@ -15,7 +15,8 @@
 	padding-top: 20px;
 	padding-bottom: 10px;
 }
-.wrapper-project-name a{
+.wrapper-project-name a,
+.wrapper-project-name span{
 	text-decoration: none;
 	font-size: 12px;
 	color: #0076FF;
@@ -83,6 +84,8 @@
 		   <ul class="wrapper-project-name">
 		   	<li class="project-name">{{projectInfo.name}}</li>
 		   	<li><a :href="editProjectLink(projectInfo)">编辑项目</a></li>
+		<!--    	<li><span @click="joinProject()">加入项目</span></li>
+		   	<li><span @click="quitProject()">退出项目</span></li> -->
 		   </ul>
 		   <!--  /project name-->
 		   <!--  项目简介-->
@@ -179,6 +182,38 @@ export default {
 	              if(res.data.success){
 	              	let data = res.data;
 	              	this.projectInfo = data.project;
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+		},
+
+		//joinProject
+		joinProject(){
+			this.$http.post("/project/joinProject.do",{
+				id:this.$route.params.id
+			},{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	Toast('加入项目成功')
+	              }else{
+	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+		},
+
+		//quitProject
+		quitProject(){
+			this.$http.post("/project/quitProject.do",{
+				id:this.$route.params.id
+			},{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	Toast('退出项目成功')
 	              }else{
 	              	Toast(res.data.msg)
 	              }

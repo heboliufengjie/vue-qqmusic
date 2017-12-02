@@ -144,7 +144,7 @@ input,textarea{
 	</div>
 </template>
 <script>
-import { Toast ,MessageBox} from 'mint-ui';
+import { Toast ,MessageBox,Indicator} from 'mint-ui';
 export default {
 	name: 'editProject',
 	data() {
@@ -216,11 +216,13 @@ export default {
 		},
 
 		getProjectInfo(){
+			//Indicator.open('加载中...');
 			this.$http.post("/project/getProjectInfo.do",{
 				id:this.$route.params.id
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
+				//Indicator.close();
 	              if(res.data.success){
 	              	let data = res.data;
 	              	this.projectInfo = data.project;
