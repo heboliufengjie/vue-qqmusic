@@ -86,30 +86,5 @@ https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 
 
 ——————————————————
-	
-	//添加项目
-	LinkAddItem(){
-		console.log('LinkAddItem')
-		location.href='/item_add';
-	},
 
-	//个人展示
-
-	LinkPersonalDisplay(){
-		location.href='/personal_display';
-	},
-
-	//当前项目并未创立成功，而为该项目添加标签需要传项目id
-	editProjectLabelsLink(){
-		location.href="/lables_edit/"+this.$route.params.id;
-	},
-
-________________
-
-1.编辑项目接口；
-2.项目标签
-3.
-
-________
-"http://weteamup.oss-cn-hangzhou.aliyuncs.com/avatar/2.jpg?Expires=1511678384&OSSAccessKeyId=LTAIJj640qt6b57p&Signature=gvudKPRC4Oy1%2Biqc5RFmVmnFC7Y%3D"
-
+http://116.62.17.193/
