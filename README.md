@@ -88,3 +88,5 @@ https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
 ——————————————————
 
 http://116.62.17.193/
+
+https://github.com/heboliufengjie/vue-qqmusic
