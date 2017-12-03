@@ -141,8 +141,7 @@ export default {
 					isPublic:0,
 				},{
 				  emulateJSON: true
-				}
-				).then(function (res) {
+				}).then(function (res) {
 		              if(res.data.success){
 		              	console.log('创建项目')
 		              	//Toast('修改成功')

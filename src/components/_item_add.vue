@@ -117,7 +117,7 @@ input,textarea{
 				<!-- <label class="mint-checklist-title">项目标签</label> -->
 				<ul class="wrapper-project-label">
 			   		<li class="project-label">项目标签</li>
-			   		<li class="project-label-edit" @click="editProjectLabelsLink()">编辑</li>
+			   		<li class="project-label-edit" @click="editProjectLabelsLink(projectInfo )">编辑</li>
 			   </ul>
 			   <!-- label -->
 				<div v-if="labels.length">
@@ -139,7 +139,7 @@ input,textarea{
 	</div>
 </template>
 <script>
-import { Toast } from 'mint-ui';
+import { Toast ,MessageBox} from 'mint-ui';
 export default {
 	name: 'addProject',
 	data() {
@@ -153,31 +153,31 @@ export default {
 	},
 	created(){
 		//this.getUserLabel();
-		this.getSystemLabel();
+		//this.getSystemLabel();
 	},
 	
 	methods:{
 		//获得系统所有的标签
-		getSystemLabel(){
-			this.$http.post("/label/getSystemLabel.do").then(function (res) {
-	              if(res.data.success){
-	              	let data = res.data;
-	              	this.labels = data.list;
-	              }
-	            }
-	        );
-		},
+		// getSystemLabel(){
+		// 	this.$http.post("/label/getSystemLabel.do").then(function (res) {
+	 //              if(res.data.success){
+	 //              	let data = res.data;
+	 //              	this.labels = data.list;
+	 //              }
+	 //            }
+	 //        );
+		// },
 
 		//获得一个用户的所有标签
-		getUserLabel(){
-			this.$http.post("/label/getUserLabel.do").then(function (res) {
-	              if(res.data.success){
-	              	let data = res.data;
-	              	this.labels = data.list;
-	              }
-	            }
-	        );
-		},
+		// getUserLabel(){
+		// 	this.$http.post("/label/getUserLabel.do").then(function (res) {
+	 //              if(res.data.success){
+	 //              	let data = res.data;
+	 //              	this.labels = data.list;
+	 //              }
+	 //            }
+	 //        );
+		// },
 	
 		//创建项目
 		createProject(){
@@ -204,10 +204,10 @@ export default {
 			}).then(function (res) {
 	              if(res.data.success){
 	              	Toast('创建成功')
-	              	
-	              	// setTimeout(()=>{
-	              	// 	location.href="/item_detail/"+ res.data.projectId;
-	              	// },500);
+
+	              	setTimeout(()=>{
+	              		location.href="/item_edit/"+ res.data.projectId;
+	              	},500);
 
 	              }else{
 	              	Toast(res.data.msg)
@@ -218,8 +218,11 @@ export default {
 
 		//editProjectLabelsLink
 		//当前项目并未创立成功，而为该项目添加标签需要传项目id
-		editProjectLabelsLink(){
-			location.href="/lables_edit/"+this.$route.params.id;
+		editProjectLabelsLink(data){
+			if(!data.id){
+				MessageBox('提示', '保存成功后才能编辑标签');
+			}
+			//location.href="/lables_edit/"+this.$route.params.id;
 		},
 
 	},

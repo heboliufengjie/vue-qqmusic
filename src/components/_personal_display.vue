@@ -61,7 +61,7 @@
 	color: #fff;
 }
 .upload img{
-	background-color: rgb(38, 162, 255);
+	//background-color: rgb(38, 162, 255);
 	color: #fff;
 	width: 72px;
 	height: 72px;
@@ -123,6 +123,8 @@
 		img{
 			width:83px;
 			height:75px;
+			display:inline-block;
+			overflow:hidden;
 		}
 
 		>div{
@@ -162,6 +164,8 @@
 				padding:3px 6px;
 				display:inline-block;
 				margin-right:6px;
+				margin-right: 5px;
+    			margin-bottom: 5px;
 			}
 		}
 		   

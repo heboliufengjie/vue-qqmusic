@@ -6,6 +6,7 @@
  .header-inner {
     border: 1px solid #ccc;
     border-radius: 10px;
+    overflow: hidden;
 }
  .inner-page{
  	padding: 0 15px;
@@ -22,13 +23,21 @@
 	background-color:#ccc;
 }
  .upload{
-	position: relative;
+	/*position: relative;
     top: calc(65px / 2 * -1);
     margin: 0 auto;
     width: 65px;
     font-size: 12px;
     text-align: center;
-    color: #fff;
+    color: #fff;*/
+    position:relative;
+	top:calc(65px / 2 * -1);
+	margin:0 auto;
+	width: 72px;
+	height:72px;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
 }
 .palette{
 	background-color: rgb(38, 162, 255);
@@ -97,10 +106,16 @@
 }
 
 .avatar{
-	width: 74px;
-	height: 74px;
-	border-radius: 50%;
-	overflow: hidden;
+	width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 65px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    border: 1px solid rgba(129, 143, 160, 0.15);
+    box-shadow: 0 1px 5px 0 rgba(74, 97, 127, 0.14);
 }
 input,textarea{
 	user-select:auto; 
@@ -132,11 +147,11 @@ input,textarea{
 			<div class="mint-checklist label-lists">
 				<ul class="wrapper-project-label">
 			   		<li class="project-label">标签</li>
-			   		<li @click="editProjectLabelsLink()">编辑</li>
+			   		<li @click="editUserLabels()">编辑</li>
 			   </ul>
 			   <!-- label -->
 				<div v-if="labels.length">
-					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+					<a href="javascript:;" @click="deleteLabel(label,index,labels)" v-for="(label,index) in labels" :key="label.id">{{label.name}}</a>
 				</div>
 				<!-- /label -->
 				<!-- no label -->
@@ -231,6 +246,31 @@ export default {
             //
         },
 
+    	//deleteLabel
+
+		deleteLabel(data,index,datas){
+			MessageBox.confirm('确定删除此标签?').then(action => {
+			  	if(action ==='confirm'){
+			  		//
+			  		this.$http.post("/label/deleteLabel.do",{
+						id:data.id,
+					},{
+					  emulateJSON: true
+					}
+					).then(function (res) {
+			              if(res.data.success){
+			              	Toast('删除标签成功')
+			              	datas.splice(index,1)
+			              }else{
+			              	Toast(res.data.msg)
+			              }
+			            }
+			        );
+			        //
+			  	}
+			});
+        },
+
 		uploadImg(){
 			console.log('uploadImg')
 		},
@@ -272,6 +312,33 @@ export default {
 	              }
 	            }
 	        );
+		},
+
+		//editUserLabels
+
+		editUserLabels(){
+			MessageBox.prompt('添加项目标签').then(({ value, action }) => {
+				 //createProjectLabel
+				this.$http.post("/label/createLabel.do",{
+					name:value,
+					isPublic:0,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+		              if(res.data.success){
+		              	Toast('创建项目标签成功')
+		              	this.labels.push({
+		              		name:value,
+		              		id:res&&res.data.labelId
+		              	})
+
+		              }else{
+		              	Toast(res.data.msg)
+		              }
+		            }
+		        );
+				 //
+			});
 		},
 
 		//editProjectLabelsLink

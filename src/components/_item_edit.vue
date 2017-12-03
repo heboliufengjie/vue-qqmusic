@@ -122,11 +122,6 @@ input,textarea{
 				<textarea v-model.trim="projectInfo.profile"  placeholder="请输入项目简介" class="mint-field-core"></textarea>
 			</div>
 			<div class="mint-checklist label-lists">
-				<!-- <label class="mint-checklist-title">项目标签</label> -->
-				<!-- <ul class="wrapper-project-label">
-			   		<li class="project-label">项目标签</li>
-			   		<li @click="editProjectLabelsLink()">编辑</li>
-			   </ul> -->
 			   <ul class="wrapper-project-label">
 			   		<li class="project-label">项目标签</li>
 			   		<li class="project-label-edit" @click="editProjectLabels()">编辑</li>
@@ -134,7 +129,7 @@ input,textarea{
 			  
 			   <!-- label -->
 				<div v-if="(projectInfo.labelList && projectInfo.labelList.length)">
-					<a href="javascript:;" v-for="label in projectInfo.labelList">{{label.name}}</a>
+					<a href="javascript:;" v-for="(label,index) in projectInfo.labelList" @click="deleteLabel(label,index,projectInfo.labelList)" :key="label.id">{{label.name}}</a>
 				</div>
 				<!-- /label -->
 				<!-- no label -->
@@ -268,11 +263,11 @@ export default {
 				},{
 				  emulateJSON: true
 				}).then(function (res) {
-					console.log('res',res)
 		              if(res.data.success){
 		              	Toast('创建项目标签成功')
 		              	this.projectInfo.labelList.push({
-		              		name:value
+		              		name:value,
+		              		id:res&&res.data.labelId
 		              	})
 
 		              }else{
@@ -283,6 +278,32 @@ export default {
 				 //
 			});
 		},
+
+		//deleteLabel
+
+		deleteLabel(data,index,datas){
+			MessageBox.confirm('确定删除此标签?').then(action => {
+			  	if(action ==='confirm'){
+			  		//
+			  		this.$http.post("/label/deleteLabel.do",{
+						id:data.id,
+					},{
+					  emulateJSON: true
+					}
+					).then(function (res) {
+			              if(res.data.success){
+			              	Toast('删除标签成功')
+			              	datas.splice(index,1)
+			              }else{
+			              	Toast(res.data.msg)
+			              }
+			            }
+			        );
+			        //
+			  	}
+			});
+        },
+
 	},
 };
 </script>
