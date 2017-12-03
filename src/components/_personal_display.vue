@@ -32,11 +32,12 @@
 .header-inner{
  	border:1px solid #ccc;
  	border-radius:10px;
+ 	padding-bottom:20px;
+ 	overflow:hidden;
 }
 .header .bg{
 	width:100%;
 	height:120px;
-	background-color:#ccc;
 }
 .header .edit{
 	position:absolute;
@@ -53,7 +54,8 @@
 	position:relative;
 	top:calc(65px / 2 * -1);
 	margin:0 auto;
-	width: 65px;
+	width: 72px;
+	height:72px;
 	font-size: 12px;
 	text-align: center;
 	color: #fff;
@@ -61,25 +63,28 @@
 .upload img{
 	background-color: rgb(38, 162, 255);
 	color: #fff;
-	width: 65px;
-	height: 65px;
+	width: 72px;
+	height: 72px;
 	border-radius: 50%;
 	text-align: center;
 	line-height: 65px;
 	font-size: 16px;
 	margin-bottom: 5px;
+	overflow:hidden;
+	border:1px solid rgba(129,143,160,0.15);
+	box-shadow: 0 1px 5px 0 rgba(74,97,127,0.14);
 }
 .name{
 	text-align:center;
 	font-size:16px;
-	margin-top: -25px;
-    margin-bottom: 25px;
+	margin-top: -16px;
 }
 .desc{
 	width:calc(100% - 20px);
-	margin:0 auto;
+	margin:34px auto 0;
 	text-align:center;
 	font-size:12px;
+	color: #1A2C3F;
 }
 .label-lists{
 	width:calc(100% - 20px);
@@ -100,7 +105,7 @@
 	padding:0 15px;
 }
 .items .title{
-		font-size: 14px;
+		font-size: 12px;
 		color: #CFCFCF;
 		margin-top:5px;
 	}
@@ -114,15 +119,16 @@
 		background-color:#fff;  
 		box-shadow: 0 1px 6px 0 rgba(74,97,127,0.14);
 		border-radius: 4px; 
-		padding:16px 10px; 
+		//padding:16px 10px; 
 		img{
-			width:60px;
-			height:60px;
-			border:1px solid #EFEFEF;
+			width:83px;
+			height:75px;
 		}
 
 		>div{
-			margin-left:15px;
+			margin-left:10px;
+			padding-bottom:9px;
+			padding-top:9px;
 		}
 		
 		.name{
@@ -143,8 +149,8 @@
 		}
 		.job{
 			font-size: 12px;
-			color: #202020;
-			padding:0.25rem 0;
+			color: #626262;
+			padding:4px 0;
 		}
 
 		.label{
@@ -172,7 +178,7 @@
 				</div>
 				<div class="name">{{userInfo.name}}</div>
 				<div class="desc">{{userInfo.profile||'这家伙很懒，还没填写简介'}}</div>
-				<div class="label-lists">
+				<div class="label-lists" v-if="labels.length">
 					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
 				</div>
 			</div>
@@ -187,7 +193,7 @@
 							<div>
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
-								<p class="label" ng-if="item.labelList.length">
+								<p class="label" v-if="item.labelList.length">
 									<span v-for="label in item.labelList">{{label}}</span>
 								</p>
 							</div>
