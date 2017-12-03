@@ -83,9 +83,9 @@
 		   <!--  project name-->
 		   <ul class="wrapper-project-name">
 		   	<li class="project-name">{{projectInfo.name}}</li>
-		   	<li><a :href="editProjectLink(projectInfo)">编辑项目</a></li>
-		<!--    	<li><span @click="joinProject()">加入项目</span></li>
-		   	<li><span @click="quitProject()">退出项目</span></li> -->
+		   	<li v-if="role=='0'"><a :href="editProjectLink(projectInfo)">编辑项目</a></li>
+		   	<li v-if="role=='2'"><span @click="joinProject()">加入项目</span></li>
+		   	<li v-if="role=='1'"><span @click="quitProject()">退出项目</span></li>
 		   </ul>
 		   <!--  /project name-->
 		   <!--  项目简介-->
@@ -130,12 +130,15 @@ export default {
 			labels:[],
 			projectInfo:{},
 			projectNumbers:[],
+			role:'',
 		}
 	},
 	created(){
 		this.getProjectInfo();
 		this.getProjectMemeber();
 		this.getProjectLabel();
+		this.getProjectRole();
+
 	},
 	
 	methods:{
@@ -216,6 +219,27 @@ export default {
 	              	Toast('退出项目成功')
 	              }else{
 	              	Toast(res.data.msg)
+	              }
+	            }
+	        );
+		},
+
+		//getProjectRole
+		getProjectRole(){
+			var storage=window.localStorage;
+	        var json=storage.getItem("teamUp");
+	        var jsonObj=JSON.parse(json);
+
+			this.$http.post("/project/getProjectRole.do",{
+				id:this.$route.params.id,
+				userId:jsonObj.id,
+				//userId:1
+			},{
+			  emulateJSON: true
+			}).then(function (res) {
+	              if(res.data.success){
+	              	let data = res.data;
+	              	this.role = data.role;
 	              }
 	            }
 	        );
