@@ -38,6 +38,13 @@
 .project_name,.project_desc,.label-lists{
 	margin-top: 14px;
 }
+.label-lists{
+	border-bottom: none !important;
+}
+.label-lists >div{
+	padding: 4px;
+	padding-bottom: 4px;
+}
 
 .label-lists a{
 	display: inline-block;
@@ -124,13 +131,14 @@ input,textarea{
 			   		<li class="project-label">项目标签</li>
 			   		<li class="project-label-edit" @click="editProjectLabels()">编辑</li>
 			   </ul>
+			  
 			   <!-- label -->
-				<div v-if="labels.length">
-					<a href="javascript:;" v-for="label in labels">{{label.name}}</a>
+				<div v-if="(projectInfo.labelList && projectInfo.labelList.length)">
+					<a href="javascript:;" v-for="label in projectInfo.labelList">{{label.name}}</a>
 				</div>
 				<!-- /label -->
 				<!-- no label -->
-				<div v-else class="labels_null">
+				<div v-if="(projectInfo.labelList && !projectInfo.labelList.length)" class="labels_null">
 					没有相关标签,请编辑标签
 				</div>
 				<!-- /no label -->
@@ -153,7 +161,6 @@ export default {
 			projectName:'',
 			projectDesc:'',
 			projectDetailDesc:'',
-			labels:[],
 			projectInfo:{},
 
 		}
@@ -199,22 +206,6 @@ export default {
             //
         },
 
-		//get project label
-		getProjectLabel(){
-			this.$http.post("/project/getProjectLabel.do",{
-				id:this.$route.params.id
-			},{
-			  emulateJSON: true
-			}
-			).then(function (res) {
-	              if(res.data.success){
-	              	let data = res.data;
-	              	this.labels = data.list;
-	              }
-	            }
-	        );
-		},
-
 		getProjectInfo(){
 			//Indicator.open('加载中...');
 			this.$http.post("/project/getProjectInfo.do",{
@@ -222,7 +213,6 @@ export default {
 			},{
 			  emulateJSON: true
 			}).then(function (res) {
-				//Indicator.close();
 	              if(res.data.success){
 	              	let data = res.data;
 	              	this.projectInfo = data.project;
@@ -271,30 +261,25 @@ export default {
 
 		editProjectLabels(){
 			MessageBox.prompt('添加项目标签').then(({ value, action }) => {
-				console.log('value',value)
-				console.log('action',action)
-				 //
-				// this.$http.post("/project/addlabelForProject.do",{
-				// 	id:this.$route.params.id,
-				// 	name:this.projectInfo.name,//项目名称
-				// 	profile:this.projectInfo.profile,//项目描述
-				// 	detail:this.projectInfo.detail,//项目详情
-				// },{
-				//   emulateJSON: true
-				// }).then(function (res) {
-		  //             if(res.data.success){
-		  //             	Toast('修改成功')
-		  //             	//
-		  //             	//return false;
-		  //             	setTimeout(()=>{
-		  //             		location.href="/item_edit/"+ this.$route.params.id;
-		  //             	},500);
+				 //createProjectLabel
+				this.$http.post("/label/createProjectLabel.do",{
+					name:value,
+					projectId:this.$route.params.id,
+				},{
+				  emulateJSON: true
+				}).then(function (res) {
+					console.log('res',res)
+		              if(res.data.success){
+		              	Toast('创建项目标签成功')
+		              	this.projectInfo.labelList.push({
+		              		name:value
+		              	})
 
-		  //             }else{
-		  //             	Toast(res.data.msg)
-		  //             }
-		  //           }
-		  //       );
+		              }else{
+		              	Toast(res.data.msg)
+		              }
+		            }
+		        );
 				 //
 			});
 		},

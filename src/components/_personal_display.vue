@@ -194,7 +194,7 @@
 								<p>{{item.name}}</p>
 								<p class="job">{{item.profile}}</p>
 								<p class="label" v-if="item.labelList.length">
-									<span v-for="label in item.labelList">{{label}}</span>
+									<span v-for="label in item.labelList">{{label.name}}</span>
 								</p>
 							</div>
 						</li>
