@@ -36,13 +36,14 @@
 		}
 	}
 	.items .title{
-		font-size: 14px;
+		font-size: 12px;
 		color: #CFCFCF;
 		text-align:center;
-		margin-top:5px;
+		margin-top:8px;
+		margin-bottom:9px;
 	}
 	.items ul{
-		padding: 5px 13px 0px;
+		padding: 0px 13px 0px;
 	}
 	.items ul li{
 		display:flex;
@@ -53,9 +54,10 @@
 		border-radius: 4px; 
 		padding:16px 10px; 
 		img{
-			width:60px;
-			height:60px;
+			width:49px;
+			height:49px;
 			border-radius:50%;
+			overflow:hidden;
 		}
 
 		>div{
@@ -67,7 +69,7 @@
 			justify-content: space-between;
 			align-items: center;
 			font-size: 14px;
-			color: #202020;
+			color: #212121;
 			span{
 				display:inline-block;
 			}
@@ -133,9 +135,9 @@
 }
 
 .project-null .null{
-	margin: 30% auto 0;
-	width:calc(0.8 * 186px);
-	height:calc(0.8 * 168px);
+	margin: 147px auto 0;
+	width:calc(0.5 * 186px);
+	height:calc(0.5 * 168px);
 	background: url('/static/project_null.png') no-repeat center;
 	background-size: cover;
 	margin-bottom:14px;
@@ -247,29 +249,6 @@
 			}
 		},
 		created() {
-	        // apiHandler({
-	        // 	name: 'rankList',
-	        // 	params: {
-	        // 		topid: this.$route.params.id
-	        // 	}
-	        // },(response) => {
-	        // 	/*
-	        // 	 * 延迟400ms执行等待页面切换动画完成
-	        // 	 * 原由: 当不存在延迟时组件的内容渲染与页面的切换将会同时执行
-	        // 	 * 由此将会导致在Chrome下产生卡顿
-	        // 	 * */
-	        // 	 console.log('response',response)
-		       //  setTimeout(() => {
-		       //  	this.topinfo = response.topinfo;
-			      //   this.songlist = response.songlist;
-			      //   this.data = response;
-
-			      //   // enable scroll 
-			      //   this.$nextTick(() => {
-			      //   	this._initScroll();
-			      //   });
-		       //  }, 400);
-	        // })
 	       //首页进入默认显示用户加入的项目
 	       this.getUserJoinedProject();
 		},

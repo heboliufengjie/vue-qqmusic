@@ -6,10 +6,12 @@
  	padding: 16px 15px;
  }
  .project_bg{
-
+ 	height: 100px;
+ 	width: 100%;
+ 	overflow: hidden;
  }
  .project_bg img{
- 	width: 100%;
+ 	/*width: 100%;*/
  }
  .header{
  	position: relative;
@@ -98,10 +100,6 @@ input,textarea{
 </style>
 <template>
 	<div class="page">
-		<!-- <div class="header">
-			<img src="/static/project_bg.png">	
-			<div class="upload">更改上传</div>
-		</div> -->
 		<div class="inner-page">
 			<div class="project_bg">
 				<img src="/static/project_bg.png">
