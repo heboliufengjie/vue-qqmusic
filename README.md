@@ -2,7 +2,7 @@
 
 
 # install dependencies
-npm install
+npm install（首先安装node，并通过 node -v 查看是否安装成功）
 
 # serve with hot reload at localhost:8080
 npm run dev
@@ -23,8 +23,16 @@ npm run e2e
 npm test
 ```
 
+项目仓库
+
+https://github.com/heboliufengjie/vue-qqmusic
+
+
+框架文档
 
 http://mint-ui.github.io/docs/#/zh-cn2/field
+
+
 
 1、login  
 
@@ -34,7 +42,7 @@ http://localhost:8080
 
 http://localhost:8080/register
 
-3、首页 有趣项目，有趣小伙伴列表
+有趣项目，有趣小伙伴列表3、首页 
 
 http://localhost:8080/lists
 
@@ -62,31 +70,17 @@ http://localhost:8080/me
 
 http://localhost:8081/systemRecommendUser/1
 
+___________________________________________
 
-
-lables_edit
-
-http://localhost:8080/lables_edit
-
-为项目添加标签
-http://localhost:8080/lables_edit/14
-
-______________________
 https://www.babel.cc/share.do?s=1868326287299387
+___________________________________________
 
 
 http://116.62.17.193/user/signin.do
 http://116.62.17.193/project/createProject.do
 
-http://localhost:8081/user/signin.do?email=375892795@qq.com&password=123456
-
-
-
-https://www.babel.cc/share.do?s=1868326287299387&/file/4795055242676073
-
-
-——————————————————
+___________________________________________
 
 http://116.62.17.193/
 
-https://github.com/heboliufengjie/vue-qqmusic
+
