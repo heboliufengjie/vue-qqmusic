@@ -48,7 +48,7 @@
 	.items ul li{
 		display:flex;
 		flex-wrap:nowrap;
-		margin-bottom:24px;
+		margin-bottom:20px;
 		background-color:#fff;  
 		box-shadow: 0 1px 6px 0 rgba(74,97,127,0.14);
 		border-radius: 4px; 
@@ -68,6 +68,7 @@
     		display: flex;
 			justify-content: space-between;
 			align-items: center;
+			font-weight: bold;
 			font-size: 14px;
 			color: #212121;
 			span{
