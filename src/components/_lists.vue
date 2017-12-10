@@ -89,13 +89,14 @@
 
 		.label{
 			font-size:12px;
-			color: #202020;
+			color: #9b9b9b;
 			span{
 				border: 1px solid #8AC0FF;
 				border-radius: 20px;
 				padding:3px 6px;
 				display:inline-block;
 				margin-right:6px;
+				margin-bottom:4px;
 			}
 		}
 		   
