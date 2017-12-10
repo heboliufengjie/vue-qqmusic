@@ -83,8 +83,8 @@
 		}
 		.job{
 			font-size:12px;
-			color: #202020;
-			padding:0.25rem 0;
+			color: #9b9b9b;
+			padding:8px 0;
 		}
 
 		.label{
@@ -93,10 +93,10 @@
 			span{
 				border: 1px solid #8AC0FF;
 				border-radius: 20px;
-				padding:3px 6px;
+				padding:3px 12px;
 				display:inline-block;
 				margin-right:6px;
-				margin-bottom:4px;
+				margin-bottom:6px;
 			}
 		}
 		   
