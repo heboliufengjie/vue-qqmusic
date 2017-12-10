@@ -39,8 +39,8 @@
 		font-size: 12px;
 		color: #CFCFCF;
 		text-align:center;
-		margin-top:8px;
-		margin-bottom:9px;
+		margin-top:13px;
+		margin-bottom:14px;
 	}
 	.items ul{
 		padding: 0px 13px 0px;
