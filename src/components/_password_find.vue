@@ -6,10 +6,10 @@
  .logo{
  	width: 115px;
  	height: 60px;
- 	background: red;
  	margin: 0 auto;
+ 	background: url('/static/logo.png') no-repeat center;
+ 	background-size: cover;
  	margin-top: calc(30px);
- 	margin-bottom: 16px;
  }
 .mint-checklist-title{
 	margin-left: 0;
@@ -36,10 +36,13 @@
 .other .register{
 	float: right;
 }
+input{
+	user-select:auto; 
+}
 </style>
 <template>
 	<div class="page">
-		<p class="logo">password_find</p>
+		<p class="logo"></p>
 		<div class="mint-checklist">
 			<label class="mint-checklist-title">邮箱</label>
 			<input type="text"  v-model.trim="email" @blur="blur(email,'email')" class="mint-field-core">

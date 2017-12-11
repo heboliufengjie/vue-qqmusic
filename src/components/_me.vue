@@ -9,7 +9,7 @@
     overflow: hidden;
 }
  .inner-page{
- 	padding: 0 15px;
+ 	padding: 0 15px 20px;
  }
  .header{
  	position: relative;
@@ -23,13 +23,6 @@
 	background-color:#ccc;
 }
  .upload{
-	/*position: relative;
-    top: calc(65px / 2 * -1);
-    margin: 0 auto;
-    width: 65px;
-    font-size: 12px;
-    text-align: center;
-    color: #fff;*/
     position:relative;
 	top:calc(65px / 2 * -1);
 	margin:0 auto;
@@ -306,6 +299,9 @@ export default {
             		jsonObj.name = this.username;
 	              	var d=JSON.stringify(jsonObj);
 	              	storage.setItem("teamUp",d);
+	              	
+	              	location.href="/personal_display";
+
 	              	Toast('修改成功')
 	              }else{
 	              	Toast(res.data.msg)
