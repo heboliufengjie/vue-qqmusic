@@ -1,40 +1,5 @@
 
 <style lang="sass" scoped>
-	.song-cotainer, .ranklist-loading {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		background-color: transparent;
-		overflow: hidden;
-		&:before {
-			display: block;
-			content: '';
-			margin-top: 0;
-
-		}
-		.lyrics-wrapper {
-			line-height: 42px;
-		    text-align: center;
-		    font-size: 16px;
-		}
-	}
-	.ranklist-loading {
-		bottom: 0;
-		.loading {
-			display: flex;
-			justify-content: center;
-			padding-top: 30%;
-			height: 100%;
-			background-color: $white-base;
-			p {
-				margin-top: 10px;
-				margin-left: 10px;
-				font-size: 10px;
-				color: rgba(0, 0, 0, .5);
-			}
-		}
-	}
 	.items .title{
 		font-size: 12px;
 		color: #CFCFCF;
@@ -53,17 +18,7 @@
 		box-shadow: 0 1px 6px 0 rgba(74,97,127,0.14);
 		border-radius: 4px; 
 		padding:16px 10px; 
-		img{
-			width:49px;
-			height:49px;
-			border-radius:50%;
-			overflow:hidden;
-		}
 
-		>div{
-			margin-left:15px;
-		}
-		
 		.name{
     		display: flex;
 			justify-content: space-between;
@@ -101,6 +56,18 @@
 		}
 		   
 	}
+	
+	.items ul li .avatarUrl{
+		margin-right:15px;
+	}
+
+	.items ul li .avatarUrl img{
+		width:49px;
+		height:49px;
+		border-radius:50%;
+		overflow:hidden;
+	}
+
 	.mint-tab-container {
 		height: calc(100vh - 40px - 53px);
 	}
@@ -184,11 +151,11 @@
 						<p class="title">找到你感兴趣的小伙伴</p>
 						<ul v-show="RecommendUserLists.length && loaded">
 							<li :key="item.id" v-for="item in RecommendUserLists" @click="LinSystemRecommendUser(item)">
-								<img :src="item.avatarUrl ||'/static/avatar02.png'">
+								<div class="avatarUrl">
+									<img :src="item.avatarUrl ||'/static/avatar02.png'">
+								</div>
 								<div>
-									<div class="name">
-										<span>{{item.name}}</span>
-									</div>
+									<p class="name">{{item.name}}</p>
 									<p class="job">{{item.profile||'这个人很懒，还没有简介'}}</p>
 									<p class="label" v-if="item.labelList.length">
 										<span v-for="label in item.labelList" :key ="label.id">{{label.name}}</span>
