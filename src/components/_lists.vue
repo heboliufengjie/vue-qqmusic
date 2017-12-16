@@ -179,9 +179,6 @@ export default {
         };
     },
     components: {
-        headerVue(resolve) {
-            require(['./header.vue'], resolve);
-        },
         fixedMenu(resolve) {
             require(['./_fixed-menu.vue'], resolve);
         },

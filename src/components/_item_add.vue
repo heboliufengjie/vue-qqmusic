@@ -7,13 +7,6 @@
     padding: 16px 15px;
 }
 
-.project_bg {
-    height: 100px;
-    width: 100%;
-    overflow: hidden;
-}
-
-
 .header {
     position: relative;
     width: 100%;
@@ -116,9 +109,9 @@ textarea {
 <template>
     <div class="page">
         <div class="inner-page">
-            <div class="project_bg">
-                <img src="/static/project_bg.png">
-            </div>
+            <!-- project-bg -->
+            <project-bg></project-bg>
+            <!-- /project-bg -->
             <div class="title">项目资料</div>
             <div class="mint-checklist project_name">
                 <label class="mint-checklist-title">项目名称</label>
@@ -161,6 +154,11 @@ export default {
             labels: [],
             projectInfo: {},
         }
+    },
+    components: {
+        projectBg(resolve) {
+            require(['./_item_edit_bg.vue'], resolve);
+        },
     },
 
     methods: {

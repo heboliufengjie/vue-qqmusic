@@ -64,6 +64,7 @@
 .project-number a {
     width: 34px;
     height: 34px;
+    border: 1px solid #e9e9ec;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -115,14 +116,14 @@
             <!-- project-number -->
             <div class="project-number">
                 <a :href="LinkToSystemRecommendUser(item)" target="_blank" v-for="(item,index) in projectNumbers" :key="item.id">
-			  	<img :src="(item.avatarUrl||'/static/avatar01.png')">
-			  </a>
+                <img :src="(item.avatarUrl||'/static/avatar01.png')">
+              </a>
                 <span v-if="(projectNumbers.length>10)">+10</span>
             </div>
             <!-- /project-number -->
             <!-- project img -->
             <div class="project-pic">
-                <img src="/static/project_bg.png">
+                <img :src="(projectInfo && projectInfo.projectImageUrl)||'/static/project_bg.png'">
             </div>
             <!-- /project img -->
             <!-- detail -->
