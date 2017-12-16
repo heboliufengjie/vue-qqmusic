@@ -165,6 +165,7 @@ textarea {
 </template>
 <script>
 import { Toast, MessageBox, Indicator } from 'mint-ui';
+import { contains } from '../util';
 export default {
     name: 'item_edit',
     data() {
@@ -176,6 +177,22 @@ export default {
         this.getProjectInfo();
     },
     methods: {
+
+        getProjectInfo() {
+            this.$http.post("/project/getProjectInfo.do", {
+                id: this.$route.params.id
+            }, {
+                emulateJSON: true
+            }).then(function(res) {
+                if (res.data.success) {
+                    let data = res.data;
+                    this.projectInfo = data.project;
+
+                } else {
+                    Toast(res.data.msg)
+                }
+            });
+        },
 
         //upload
         upload: function(e) {
@@ -202,6 +219,7 @@ export default {
             }).then(function(res) {
                 if (res.data.success) {
                     Indicator.close();
+
                     let data = res.data;
                     this.projectInfo.projectImageUrl = data.url;
                     Toast('上传图片成功！')
@@ -210,23 +228,6 @@ export default {
                 }
             });
             //
-        },
-
-        getProjectInfo() {
-            //Indicator.open('加载中...');
-            this.$http.post("/project/getProjectInfo.do", {
-                id: this.$route.params.id
-            }, {
-                emulateJSON: true
-            }).then(function(res) {
-                if (res.data.success) {
-                    let data = res.data;
-                    this.projectInfo = data.project;
-
-                } else {
-                    Toast(res.data.msg)
-                }
-            });
         },
 
         //修改项目
@@ -250,10 +251,9 @@ export default {
             }).then(function(res) {
                 if (res.data.success) {
                     Toast('修改成功')
-                    //
-                    //return false;
+
                     setTimeout(() => {
-                        location.href = "/item_edit/" + this.$route.params.id;
+                        location.href = "/item_detail/" + this.$route.params.id;
                     }, 500);
 
                 } else {
@@ -263,11 +263,18 @@ export default {
         },
 
         //editProjectLabels
-
         editProjectLabels() {
             MessageBox.prompt('添加项目标签').then(({ value, action }) => {
 
                 if (!value) {
+                    return false;
+                }
+
+                let labelList = this.projectInfo && this.projectInfo.labelList;
+                let inArray = contains(labelList, { name: value });
+
+                if (inArray) {
+                    Toast('标签名称不能重复！')
                     return false;
                 }
 
