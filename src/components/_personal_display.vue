@@ -188,7 +188,9 @@
                     <p class="title">Ta创建的项目</p>
                     <ul>
                         <li v-for='item in lists' :key="item.id">
-                            <img :src="item.projectImageUrl||'/static/project_bg02.png'" class="project" @click="getProjectInfo(item)">
+                            <div class="project" @click="getProjectInfo(item)">
+                                <img :src="item.projectImageUrl||'/static/project_bg02.png'">
+                            </div>
                             <div>
                                 <p>{{item.name}}</p>
                                 <p class="job">{{item.profile}}</p>
