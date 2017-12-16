@@ -32,6 +32,7 @@
     </div>
 </template>
 <script>
+import { GetLocalStorage } from '../util';
 export default {
     name: 'mt-header',
     data() {
@@ -55,7 +56,7 @@ export default {
         //个人展示
 
         LinkPersonalDisplay() {
-            location.href = '/personal_display';
+            location.href = '/personal_display/' + GetLocalStorage().id;
         },
     }
 };

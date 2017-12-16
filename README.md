@@ -60,7 +60,7 @@ http://localhost:8080/item_detail/16
 
 
 7、个人资料展示
-http://localhost:8080/personal_display
+http://localhost:8080/personal_display/7
 
 8、个人资料编辑页面
 

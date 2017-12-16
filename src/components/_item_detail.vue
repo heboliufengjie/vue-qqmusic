@@ -115,7 +115,7 @@
             <!-- /labels -->
             <!-- project-number -->
             <div class="project-number">
-                <a :href="LinkToSystemRecommendUser(item)" target="_blank" v-for="(item,index) in projectNumbers" :key="item.id">
+                <a :href="LinkpPersonalDisplay(item)" v-for="(item,index) in projectNumbers" :key="item.id">
                 <img :src="(item.avatarUrl||'/static/avatar01.png')">
               </a>
                 <span v-if="(projectNumbers.length>10)">+10</span>
@@ -239,9 +239,9 @@ export default {
             return '/item_edit/' + data.id;
         },
 
-        //LinkToSystemRecommendUser
-        LinkToSystemRecommendUser(data) {
-            return '/systemRecommendUser/' + data.id;
+        //LinkpPrsonalDisplay
+        LinkpPersonalDisplay(data) {
+            return '/personal_display/' + data.id;
         },
     },
 };

@@ -134,7 +134,7 @@
                     <mt-tab-container-item id="2" v-if="selected == 2">
                         <p class="title">找到你感兴趣的小伙伴</p>
                         <ul v-show="RecommendUserLists.length && loaded">
-                            <li :key="item.id" v-for="item in RecommendUserLists" @click="LinSystemRecommendUser(item)">
+                            <li :key="item.id" v-for="item in RecommendUserLists" @click="LinkpPersonalDisplay(item)">
                                 <div class="avatarUrl">
                                     <img :src="item.avatarUrl ||'/static/avatar02.png'">
                                 </div>
@@ -233,8 +233,8 @@ export default {
 
         //查看系统推荐小伙伴想详情
 
-        LinSystemRecommendUser(data) {
-            location.href = '/systemRecommendUser/' + data.id;
+        LinkpPersonalDisplay(data) {
+            location.href = '/personal_display/' + data.id;
         },
 
     },

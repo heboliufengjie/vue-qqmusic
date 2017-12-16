@@ -171,47 +171,22 @@
         <div class="header">
             <div class="header-inner">
                 <img src="/static/avatar_bg.png" class="bg">
-                <span v-if="isMe()" class="edit"><a :href="editLink()">编辑</a></span>
+                <span class="edit"><a :href="editLink()">编辑</a></span>
                 <div class="upload">
                     <img :src="userInfo.avatarUrl||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
                 </div>
                 <div class="name">{{userInfo.name}}</div>
                 <div class="desc">{{userInfo.profile||'这家伙很懒，还没填写简介'}}</div>
                 <div class="label-lists" v-if="labels.length">
-                    <a href="javascript:;" v-for="label in labels" v-if="label.name">{{label.name}}</a>
+                    <a href="javascript:;" v-for="label in labels" :key="label.id">{{label.name}}</a>
                 </div>
             </div>
         </div>
-        <div class="item-lists">
-            <mt-tab-container class='items'>
-                <mt-tab-container-item>
-                    <p class="title">Ta创建的项目</p>
-                    <ul>
-                        <li v-for='item in lists' :key="item.id">
-                            <div class="project" @click="getProjectInfo(item)">
-                                <img :src="item.projectImageUrl||'/static/project_bg02.png'">
-                            </div>
-                            <div>
-                                <p>{{item.name}}</p>
-                                <p class="job">{{item.profile}}</p>
-                                <p class="label" v-if="item.labelList.length">
-                                    <span v-for="label in item.labelList">{{label.name}}</span>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </mt-tab-container-item>
-            </mt-tab-container>
-        </div>
-        <!-- fixed-menu -->
-        <fixed-menu></fixed-menu>
-        <!-- /fixed-menu -->
     </div>
 </template>
 <script>
-import { GetLocalStorage } from '../util';
 export default {
-    name: 'personal_display',
+    name: 'personal_display_info',
     data() {
         return {
             showAvatar: false,
@@ -220,39 +195,28 @@ export default {
             userInfo: {},
         }
     },
-    components: {
-        fixedMenu(resolve) {
-            require(['./_fixed-menu.vue'], resolve);
-        },
-    },
     created() {
         this.getUserInfo();
-        this.getUserCreteProject();
         this.getUserLabel();
-        this.isMe();
     },
     methods: {
 
-        //判断是不是当前用户
-        isMe() {
-            if (GetLocalStorage().id == this.$route.params.id) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
         //获得用户信息
+
         getUserInfo() {
+            var storage = window.localStorage;
+            var json = storage.getItem("teamUp");
+            var jsonObj = JSON.parse(json);
+
             this.$http.post("/user/getUserInfo.do", {
-                id: this.$route.params.id,
+                id: jsonObj.id,
             }, {
                 emulateJSON: true
             }).then(function(res) {
                 if (res.data.success) {
                     let data = res.data;
-                    this.showAvatar = true;
-                    this.userInfo = data;
+                    this.showAvatar = true,
+                        this.userInfo = data;
                 }
             });
         },
@@ -260,37 +224,13 @@ export default {
 
         //获得一个用户的所有标签
         getUserLabel() {
-            this.$http.post("/label/getUserLabel.do", {
-                id: this.$route.params.id,
-            }, {
-                emulateJSON: true
-            }).then(function(res) {
+            this.$http.post("/label/getUserLabel.do").then(function(res) {
                 if (res.data.success) {
                     let data = res.data;
                     this.labels = data.list;
                 }
             });
         },
-
-        // 获取用户创建的项目
-        getUserCreteProject() {
-            this.$http.post("/project/getUserCreateProject.do", {
-                id: this.$route.params.id,
-            }, {
-                emulateJSON: true
-            }).then(function(res) {
-                if (res.data.success) {
-                    let data = res.data;
-                    this.lists = data.list;
-                }
-            });
-        },
-
-        //getProjectInfo
-        getProjectInfo(data) {
-            location.href = '/item_detail/' + data.id;
-        },
-
 
         //editLink
 

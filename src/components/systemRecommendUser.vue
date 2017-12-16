@@ -1,6 +1,5 @@
 <style lang="sass">
 .page {
-    position: relative;
     background-color: #fff;
     overflow: auto;
 }
@@ -15,8 +14,6 @@
 .header-inner {
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding-bottom: 20px;
-    overflow: hidden;
 }
 
 .header .bg {
@@ -41,40 +38,35 @@
     position: relative;
     top: calc(65px / 2 * -1);
     margin: 0 auto;
-    width: 72px;
-    height: 72px;
+    width: 65px;
     font-size: 12px;
     text-align: center;
     color: #fff;
 }
 
 .upload img {
-    //background-color: rgb(38, 162, 255);
     color: #fff;
-    width: 72px;
-    height: 72px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     text-align: center;
     line-height: 65px;
     font-size: 16px;
     margin-bottom: 5px;
-    overflow: hidden;
-    border: 1px solid rgba(129, 143, 160, 0.15);
-    box-shadow: 0 1px 5px 0 rgba(74, 97, 127, 0.14);
 }
 
 .name {
     text-align: center;
     font-size: 16px;
-    margin-top: -16px;
+    margin-top: -25px;
+    margin-bottom: 25px;
 }
 
 .desc {
     width: calc(100% - 20px);
-    margin: 34px auto 0;
+    margin: 0 auto;
     text-align: center;
     font-size: 12px;
-    color: #1A2C3F;
 }
 
 .label-lists {
@@ -99,7 +91,7 @@
 }
 
 .items .title {
-    font-size: 12px;
+    font-size: 14px;
     color: #CFCFCF;
     margin-top: 5px;
 }
@@ -114,18 +106,16 @@
     margin-bottom: 24px;
     background-color: #fff;
     box-shadow: 0 1px 6px 0 rgba(74, 97, 127, 0.14);
-    border-radius: 4px; //padding:16px 10px; 
+    border-radius: 4px;
+    padding: 16px 10px;
     img {
-        width: 83px;
-        height: 75px;
-        display: inline-block;
-        overflow: hidden;
+        width: 60px;
+        height: 60px;
+        border: 1px solid #EFEFEF;
     }
 
     >div {
-        margin-left: 10px;
-        padding-bottom: 9px;
-        padding-top: 9px;
+        margin-left: 15px;
     }
 
     .name {
@@ -146,8 +136,8 @@
     }
     .job {
         font-size: 12px;
-        color: #626262;
-        padding: 4px 0;
+        color: #202020;
+        padding: 0.25rem 0;
     }
 
     .label {
@@ -159,8 +149,6 @@
             padding: 3px 6px;
             display: inline-block;
             margin-right: 6px;
-            margin-right: 5px;
-            margin-bottom: 5px;
         }
     }
 }
@@ -171,17 +159,17 @@
         <div class="header">
             <div class="header-inner">
                 <img src="/static/avatar_bg.png" class="bg">
-                <span v-if="isMe()" class="edit"><a :href="editLink()">编辑</a></span>
                 <div class="upload">
                     <img :src="userInfo.avatarUrl||'/static/avatar02.png'" v-if="showAvatar" class="avatar">
                 </div>
                 <div class="name">{{userInfo.name}}</div>
                 <div class="desc">{{userInfo.profile||'这家伙很懒，还没填写简介'}}</div>
                 <div class="label-lists" v-if="labels.length">
-                    <a href="javascript:;" v-for="label in labels" v-if="label.name">{{label.name}}</a>
+                    <a href="javascript:;" v-for="label in labels" :key="label.id">{{label.name}}</a>
                 </div>
             </div>
         </div>
+        <!-- item-lists -->
         <div class="item-lists">
             <mt-tab-container class='items'>
                 <mt-tab-container-item>
@@ -203,15 +191,15 @@
                 </mt-tab-container-item>
             </mt-tab-container>
         </div>
+        <!-- /item-lists -->
         <!-- fixed-menu -->
         <fixed-menu></fixed-menu>
         <!-- /fixed-menu -->
     </div>
 </template>
 <script>
-import { GetLocalStorage } from '../util';
 export default {
-    name: 'personal_display',
+    name: 'systemRecommendUser',
     data() {
         return {
             showAvatar: false,
@@ -227,20 +215,10 @@ export default {
     },
     created() {
         this.getUserInfo();
-        this.getUserCreteProject();
         this.getUserLabel();
-        this.isMe();
+        this.getUserCreteProject();
     },
     methods: {
-
-        //判断是不是当前用户
-        isMe() {
-            if (GetLocalStorage().id == this.$route.params.id) {
-                return true;
-            } else {
-                return false;
-            }
-        },
 
         //获得用户信息
         getUserInfo() {
@@ -289,13 +267,6 @@ export default {
         //getProjectInfo
         getProjectInfo(data) {
             location.href = '/item_detail/' + data.id;
-        },
-
-
-        //editLink
-
-        editLink() {
-            return '/me';
         },
 
     }

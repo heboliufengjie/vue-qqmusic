@@ -258,6 +258,8 @@ export default {
                     Toast('上传图片成功！')
                     this.showAvatar = true;
                     this.userInfo.avatarUrl = data.url;
+                    location.href = "/personal_display/" + GetLocalStorage().id;
+
                 } else {
                     Toast(res.data.msg)
                 }
@@ -347,7 +349,7 @@ export default {
                         name: this.userInfo && this.userInfo.name
                     });
 
-                    location.href = "/personal_display";
+                    location.href = "/personal_display/" + GetLocalStorage().id;
 
                     Toast('修改成功')
                 } else {
