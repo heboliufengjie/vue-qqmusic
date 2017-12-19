@@ -187,8 +187,8 @@
                 <mt-tab-container-item>
                     <p class="title">Ta创建的项目</p>
                     <ul>
-                        <li v-for='item in lists' :key="item.id">
-                            <div class="project" @click="getProjectInfo(item)">
+                        <li v-for='item in lists' :key="item.id" @click="getProjectInfo(item)">
+                            <div class="project">
                                 <img :src="item.projectImageUrl||'/static/project_bg02.png'">
                             </div>
                             <div>
