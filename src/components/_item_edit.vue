@@ -130,7 +130,10 @@ textarea {
                 <label class="mint-checklist-title">项目详细描述</label>
                 <textarea v-model.trim="projectInfo.detail" placeholder="请输入项目详细描述" class="mint-field-core"></textarea>
             </div>
-            <mt-button size="large" class="mint-button--primary" @click="editProject()">确定</mt-button>
+            <mt-button size="large" class="mint-button--primary" @click.native="editProject()">确定</mt-button>
+            <!-- reset -->
+            <mt-button size="large" class="mint-button mint-button--primary mint-button--large is-plain" type="primary" @click.native="reset()">取消</mt-button>
+            <!-- /reset -->
         </div>
     </div>
 </template>
@@ -200,6 +203,12 @@ export default {
                     Toast(res.data.msg)
                 }
             });
+        },
+
+        //reset
+
+        reset() {
+            this.getProjectInfo();
         },
 
         //editProjectLabels

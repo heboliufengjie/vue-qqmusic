@@ -132,6 +132,9 @@
             </div>
             <!-- /detail -->
         </div>
+        <!-- fixed-menu -->
+        <fixed-menu></fixed-menu>
+        <!-- /fixed-menu -->
     </div>
 </template>
 <script>
@@ -144,6 +147,11 @@ export default {
             projectNumbers: [],
             role: '',
         }
+    },
+    components: {
+        fixedMenu(resolve) {
+            require(['./_fixed-menu.vue'], resolve);
+        },
     },
     created() {
         this.getProjectInfo();
