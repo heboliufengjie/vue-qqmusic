@@ -110,7 +110,7 @@ textarea {
     <div class="page">
         <div class="inner-page">
             <!-- project-bg -->
-            <project-bg></project-bg>
+            <project-bg @toAddProject="toAddProject"></project-bg>
             <!-- /project-bg -->
             <div class="title">项目资料</div>
             <div class="mint-checklist project_name">
@@ -149,13 +149,15 @@ textarea {
     </div>
 </template>
 <script>
-import { Toast, MessageBox } from 'mint-ui';
+import { Toast, MessageBox, Indicator } from 'mint-ui';
 export default {
     name: 'item_add',
     data() {
         return {
             labels: [],
             projectInfo: {},
+            files: {},
+            projectId: '',
         }
     },
     components: {
@@ -190,11 +192,43 @@ export default {
                 emulateJSON: true
             }).then(function(res) {
                 if (res.data.success) {
+                    let projectId = res.data.projectId;
+                    this.upload(projectId);
                     Toast('创建成功')
                     setTimeout(() => {
                         location.href = "/item_edit/" + res.data.projectId;
                     }, 500);
 
+                } else {
+                    Toast(res.data.msg)
+                }
+            });
+        },
+
+        //toAddProject
+
+        toAddProject(data) {
+            this.files = data.files;
+        },
+
+        //upload project bg
+
+        upload(id) {
+            let formData = new FormData();
+            let file = this.files;
+            let name = file[0].name;
+            formData.append('file', file[0]); // 文件数据
+            formData.append('fileName', name); // 文件名
+            formData.append('projectId', id); // 项目id
+            this.$http.post("/file/uploadFile.do", formData, {
+                emulateJSON: true
+            }).then(function(res) {
+                if (res.data.success) {
+                    //Indicator.close();
+                    //let data = res.data;
+                    //this.projectInfo.projectImageUrl = data.url;
+                    //location.href = "/item_detail/" + this.$route.params.id;
+                    //Toast('上传图片成功！')
                 } else {
                     Toast(res.data.msg)
                 }

@@ -50,11 +50,13 @@ export default {
                 var preview = document.getElementById('preview');
                 let input = this.$refs.files;
                 if (input.files && input.files[0]) {
+                    this.$emit('toAddProject', input);
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         preview.setAttribute('src', e.target.result);
                     }
                     reader.readAsDataURL(input.files[0]);
+
                 } else {
                     preview.setAttribute('src', '/static/project_bg.png');
                 }
@@ -73,10 +75,12 @@ export default {
                 // }
 
                 // 使用formData组装数据
-                var formData = new FormData();
+
+                let formData = new FormData();
                 formData.append('file', file[0]); // 文件数据
                 formData.append('fileName', name); // 文件名
                 formData.append('projectId', this.$route.params.id); // 项目id
+
                 this.$http.post("/file/uploadFile.do", formData, {
                     emulateJSON: true
                 }).then(function(res) {
