@@ -192,8 +192,13 @@ export default {
                 emulateJSON: true
             }).then(function(res) {
                 if (res.data.success) {
-                    let projectId = res.data.projectId;
-                    this.upload(projectId);
+
+                    //upload project bg frist
+                    if(this.files && this.files.name){
+                        let projectId = res.data.projectId;
+                        this.upload(projectId);
+                    }
+
                     Toast('创建成功')
                     setTimeout(() => {
                         location.href = "/item_edit/" + res.data.projectId;
